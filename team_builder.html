@@ -1,0 +1,1577 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trình Tạo & Xếp Hạng Đội Hình — Honkai: Star Rail Currency Wars</title>
+  <link rel="icon" href="assets/ui/logo.png" type="image/png">
+  <style>
+    :root {
+      --bg-dark: #0a0b14;
+      --bg-panel: #121325;
+      --bg-card: #171930;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(0, 242, 254, 0.5);
+      --accent-cyan: #00f2fe;
+      --accent-gold: #f1c40f;
+      --accent-purple: #a29bfe;
+      --text-main: #f1f2f6;
+      --text-muted: #8388a4;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: rgba(15, 17, 34, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #f39c12, #e74c3c);
+      color: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .header-title {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Standard Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #f1c40f, #e67e22);
+      color: #000;
+      box-shadow: 0 2px 10px rgba(241, 196, 15, 0.35);
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(241, 196, 15, 0.5); }
+    .btn-cyan {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #000;
+      box-shadow: 0 2px 10px rgba(0, 242, 254, 0.35);
+    }
+    .btn-cyan:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 242, 254, 0.5); }
+    .btn-dark {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-dark:hover { background: rgba(255, 255, 255, 0.14); }
+    .btn-danger {
+      background: rgba(231, 76, 60, 0.15);
+      color: #ff7675;
+      border: 1px solid rgba(231, 76, 60, 0.4);
+    }
+    .btn-danger:hover { background: rgba(231, 76, 60, 0.3); color: #fff; }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1340px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 20px 40px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Team Meta Settings Bar */
+    .team-meta-bar {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .meta-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .meta-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .text-input, .select-input {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .text-input:focus, .select-input:focus { border-color: var(--accent-cyan); }
+
+    /* ========================================= */
+    /* THE IN-GAME BOARD (ACCURATE GAME AESTHETIC) */
+    /* ========================================= */
+    .in-game-board {
+      background: radial-gradient(circle at 50% 15%, #191b38 0%, #111225 65%, #0d0e1c 100%);
+      border: 1px solid rgba(110, 130, 210, 0.28);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Constellation background decoration */
+    .in-game-board::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 80px 120px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 220px 60px, rgba(162, 155, 254, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 450px 140px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 700px 40px, rgba(0, 242, 254, 0.8), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 950px 90px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 1150px 160px, rgba(241, 196, 15, 0.8), rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 300px 200px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    /* Top Synergy / Bonds Banner (Matching In-Game Image 1) */
+    .board-synergy-banner {
+      background: rgba(16, 15, 36, 0.8);
+      border: 1px solid rgba(138, 110, 230, 0.35);
+      border-radius: 6px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      min-height: 40px;
+      box-shadow: inset 0 0 12px rgba(100, 80, 200, 0.15);
+      position: relative;
+      z-index: 2;
+    }
+    .synergy-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e4e6f0;
+      transition: all 0.2s;
+    }
+    .synergy-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .synergy-diamond {
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+      border-radius: 2px;
+      transform: rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 6px rgba(108, 92, 231, 0.5);
+    }
+    .synergy-diamond-inner {
+      transform: rotate(-45deg);
+      font-size: 10px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .synergy-empty-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Counter Header (👤 0/13 or 👤 9/13 Centered) */
+    .board-counter-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 1px;
+      padding-top: 2px;
+      position: relative;
+      z-index: 2;
+    }
+    .board-counter-header svg {
+      fill: #ffffff;
+    }
+
+    /* Zone Header Line (🔲 Khu Vực Trên Sân / Dự Bị) */
+    .zone-row-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #e0e2ec;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+    .zone-icon-box {
+      width: 14px;
+      height: 19px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .zone-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.03) 100%);
+    }
+
+    /* Slots Rows (Centered!) */
+    .board-slots-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+      min-height: 125px;
+    }
+
+    /* Each Slot Item Wrapper */
+    .slot-item {
+      width: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      position: relative;
+    }
+
+    /* ========================================= */
+    /* GAME CARD STYLES (EXACT 7:8 TIERLIST RATIO) */
+    /* ========================================= */
+    .gs-cost-1 { --gs-rarity:#CDCDD8; --gs-start:rgba(140,140,140,1); --gs-end:rgba(6,1,27,1); }
+    .gs-cost-2 { --gs-rarity:#6EE0B6; --gs-start:rgba(94,156,150,1);  --gs-end:rgba(6,1,27,1); }
+    .gs-cost-3 { --gs-rarity:#73B0F4; --gs-start:rgba(113,128,210,1); --gs-end:rgba(6,1,27,1); }
+    .gs-cost-4 { --gs-rarity:#C197FF; --gs-start:rgba(155,123,218,1); --gs-end:rgba(6,1,27,1); }
+    .gs-cost-5 { --gs-rarity:#FFCF70; --gs-start:rgba(203,158,96,1);  --gs-end:rgba(6,1,27,1); }
+
+    /* Card Frame (70px x 80px) */
+    .card-frame {
+      width: 70px;
+      height: 80px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(18, 22, 42, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .card-frame:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+    .card-frame.active-target {
+      border-color: var(--accent-cyan) !important;
+      box-shadow: 0 0 14px rgba(0, 242, 254, 0.75) !important;
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    /* Has Character: Exact Game Card Tierlist Style */
+    .card-frame.has-char {
+      --gs-bg:
+        linear-gradient(var(--gs-rarity), var(--gs-rarity)) 2px 74px / 66px 4px no-repeat,
+        linear-gradient(to bottom, var(--gs-start) 20%, var(--gs-end) 100%) 2px 2px / 66px 71px no-repeat;
+      border: none;
+      border-radius: 0;
+      box-shadow: inset 0 0 0 1px #2F2D2A;
+      background: var(--gs-bg), #121212;
+    }
+    .card-frame.has-char:hover {
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5) !important;
+      z-index: 10;
+    }
+    .card-frame.has-char .card-img {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 66px;
+      height: 71px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    /* Top-Right In-Game Corner Badge */
+    .card-corner-badge {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* Empty Slot In-Game Placeholder SVG Icon */
+    .card-frame .empty-slot-icon {
+      pointer-events: none;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+    .card-frame:hover .empty-slot-icon { opacity: 1; }
+
+    /* Remove button on filled card */
+    .btn-remove-char {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #ff7675;
+      font-size: 11px;
+      font-weight: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 15;
+      cursor: pointer;
+    }
+    .card-frame.has-char:hover .btn-remove-char { display: flex; }
+    .btn-remove-char:hover { background: #eb4d4b; color: #fff; }
+
+    /* Stars Row (Positioned Between Avatar and Name) */
+    .slot-stars-row {
+      height: 14px;
+      line-height: 14px;
+      text-align: center;
+      font-size: 11px;
+      color: #ffd32a;
+      text-shadow: 0 0 4px rgba(255, 211, 42, 0.6);
+      letter-spacing: 1.5px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+    .slot-stars-row:hover { background: rgba(255, 211, 42, 0.15); }
+
+    /* Character Name */
+    .slot-name {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      width: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Gears Row (3 items under character for Trên Sân) */
+    .slot-gears-row {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 1px;
+      width: 70px;
+    }
+    .gear-slot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+    .gear-slot {
+      width: 22px;
+      height: 22px;
+      border-radius: 3px;
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s;
+      box-sizing: border-box;
+    }
+    .gear-slot:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .gear-slot.active-target {
+      border-color: var(--accent-gold) !important;
+      box-shadow: 0 0 8px rgba(241, 196, 15, 0.8) !important;
+    }
+    .gear-slot.has-gear {
+      border: none;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    }
+    .gear-slot.has-gear img {
+      width: 100%;
+      height: 100%;
+      border-radius: 3px;
+      object-fit: cover;
+    }
+    .gear-slot .btn-remove-gear {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.9);
+      color: #ff7675;
+      font-size: 9px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .gear-slot:hover .btn-remove-gear { display: flex; }
+    .gear-slot .btn-remove-gear:hover { background: #eb4d4b; color: #fff; }
+    .gear-sub-num {
+      font-size: 9px;
+      color: var(--text-muted);
+      line-height: 9px;
+    }
+
+    /* ========================================= */
+    /* POOLS / DRAWER SECTION (CHARACTERS & GEAR) */
+    /* ========================================= */
+    .pools-section {
+      background: rgba(18, 20, 36, 0.96);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .pools-nav {
+      display: flex;
+      background: rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 12px;
+    }
+    .pool-tab-btn {
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pool-tab-btn:hover { color: #fff; }
+    .pool-tab-btn.active {
+      color: var(--accent-cyan);
+      border-bottom-color: var(--accent-cyan);
+    }
+    .pool-content {
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pool-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-chip:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+    .filter-chip.active {
+      color: #000;
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    /* Grids */
+    .pool-grid-scroll {
+      max-height: 270px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .char-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      gap: 12px 10px;
+      justify-items: center;
+    }
+    .picker-char-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .picker-char-card:hover { transform: translateY(-3px); }
+
+    .gear-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+    }
+    .picker-gear-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .picker-gear-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    .picker-gear-item img {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    .picker-gear-item span {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #e0e2ec;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #14162b;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title { font-size: 16px; font-weight: 700; color: #fff; }
+    .btn-close {
+      background: none; border: none; font-size: 18px; color: var(--text-muted); cursor: pointer;
+    }
+    .btn-close:hover { color: #fff; }
+    .modal-body {
+      padding: 18px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .code-output {
+      width: 100%;
+      height: 280px;
+      background: #090a12;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: #00f2fe;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 12px;
+      padding: 12px;
+      outline: none;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #00b894, #00cec9);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 300;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="header-left">
+      <span class="brand-badge">HSR TOOL</span>
+      <h1 class="header-title">🛠️ Trình Tạo & Xếp Hạng Đội Hình</h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-gold" onclick="openExportModal()">✨ Xuất Code JSON</button>
+      <button class="btn btn-cyan" onclick="copyCurrentJson()">⚡ Sao Chép Nhanh</button>
+      <button class="btn btn-dark" onclick="openImportModal()">📥 Nhập JSON Sửa</button>
+      <button class="btn btn-danger" onclick="resetBoard()">🗑️ Xóa Trắng Bàn</button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main>
+
+    <!-- Team Information Setting -->
+    <div class="team-meta-bar">
+      <div class="meta-group">
+        <label class="meta-label">🏆 Thứ Hạng (Top):</label>
+        <input type="number" id="teamRank" class="text-input" style="width: 70px;" min="1" max="99" value="1" oninput="updateTeamMeta()">
+      </div>
+      <div class="meta-group">
+        <label class="meta-label">📝 Tên Đội Hình:</label>
+        <input type="text" id="teamName" class="text-input" style="width: 220px;" value="Đội hình mới" placeholder="Nhập tên đội hình..." oninput="updateTeamMeta()">
+      </div>
+      <div class="meta-group">
+        <label class="meta-label">📋 Mã Đội Hình:</label>
+        <input type="text" id="teamCodeInput" class="text-input" style="width: 190px;" placeholder="Dán hoặc nhập mã..." oninput="updateTeamMeta()">
+        <button class="btn btn-dark" style="padding: 5px 9px; font-size: 11px;" onclick="pasteCodeFromClipboard()" title="Dán nhanh từ bộ nhớ tạm">📋 Dán Mã</button>
+      </div>
+      <div class="meta-group">
+        <label class="meta-label">📌 Mã Slot:</label>
+        <select id="teamSlotId" class="select-input" onchange="updateTeamMeta()">
+          <option value="team_1">team_1 (Slot 1)</option>
+          <option value="team_2">team_2 (Slot 2)</option>
+          <option value="team_3" selected>team_3 (Slot 3)</option>
+          <option value="team_4">team_4 (Slot 4)</option>
+          <option value="team_5">team_5 (Slot 5)</option>
+          <option value="team_6">team_6 (Slot 6)</option>
+          <option value="team_7">team_7 (Slot 7)</option>
+          <option value="team_8">team_8 (Slot 8)</option>
+          <option value="team_9">team_9 (Slot 9)</option>
+          <option value="team_10">team_10 (Slot 10)</option>
+          <option value="team_11">team_11 (Slot 11)</option>
+          <option value="team_12">team_12 (Slot 12)</option>
+          <option value="team_13">team_13 (Slot 13)</option>
+          <option value="team_14">team_14 (Slot 14)</option>
+          <option value="team_15">team_15 (Slot 15)</option>
+          <option value="team_16">team_16 (Slot 16)</option>
+          <option value="team_17">team_17 (Slot 17)</option>
+          <option value="team_18">team_18 (Slot 18)</option>
+          <option value="team_19">team_19 (Slot 19)</option>
+          <option value="team_20">team_20 (Slot 20)</option>
+        </select>
+      </div>
+      <div class="meta-group">
+        <label class="meta-label">⚡ Đội Mẫu:</label>
+        <select id="presetSelect" class="select-input" onchange="loadPreset(this.value)">
+          <option value="">-- Chọn đội mẫu để nạp --</option>
+          <option value="team_1">Top 1: Nuke Phainon</option>
+          <option value="team_2">Top 2: Vòng lặp vô tận</option>
+          <option value="blank">Đội trống mới</option>
+        </select>
+      </div>
+      <div style="margin-left: auto; font-size: 13px; color: var(--accent-cyan); font-weight: 700;" id="counterPill">
+        Trên Sân: 0/4 · Dự Bị: 0/9 · Tổng: 0/13
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- THE IN-GAME BOARD (AUTHENTIC APPEARANCE)  -->
+    <!-- ========================================= -->
+    <div class="in-game-board">
+      
+      <!-- Top Synergy / Bonds Bar (Dynamic based on placed units) -->
+      <div class="board-synergy-banner" id="synergyBanner">
+        <!-- Generated by JS -->
+      </div>
+
+      <!-- Counter header 👤 0/13 -->
+      <div class="board-counter-header">
+        <svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span id="boardCounterText">0/13</span>
+      </div>
+
+      <!-- Zone: Trên Sân -->
+      <div class="zone-row-header">
+        <span class="zone-icon-box">
+          <svg width="13" height="18" viewBox="0 0 13 18" fill="none"><rect x="0.75" y="0.75" width="11.5" height="16.5" rx="1.5" fill="#000" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/><rect x="3" y="3" width="7" height="4.5" rx="0.8" fill="#fff"/><rect x="3" y="9.5" width="7" height="4.5" rx="0.8" fill="rgba(255,255,255,0.3)"/></svg>
+        </span>
+        <span>Khu Vực Trên Sân</span>
+        <div class="zone-line"></div>
+      </div>
+      <div class="board-slots-row" id="trenSanRow">
+        <!-- 4 slots generated by JS -->
+      </div>
+
+      <!-- Zone: Dự Bị -->
+      <div class="zone-row-header">
+        <span class="zone-icon-box">
+          <svg width="13" height="18" viewBox="0 0 13 18" fill="none"><rect x="0.75" y="0.75" width="11.5" height="16.5" rx="1.5" fill="#000" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/><rect x="3" y="3" width="7" height="4.5" rx="0.8" fill="#fff"/><rect x="3" y="9.5" width="7" height="4.5" rx="0.8" fill="rgba(255,255,255,0.3)"/></svg>
+        </span>
+        <span>Khu Vực Dự Bị</span>
+        <div class="zone-line"></div>
+      </div>
+      <div class="board-slots-row" id="duBiRow">
+        <!-- 9 slots generated by JS -->
+      </div>
+
+    </div>
+
+    <!-- Pools Section (Drawer at Bottom) -->
+    <div class="pools-section">
+      <div class="pools-nav">
+        <button class="pool-tab-btn active" id="tabBtnChars" onclick="switchPoolTab('chars')">👥 Kho Nhân Vật (60)</button>
+        <button class="pool-tab-btn" id="tabBtnGears" onclick="switchPoolTab('gears')">⚔️ Kho Trang Bị (46)</button>
+      </div>
+
+      <!-- Tab Chars -->
+      <div class="pool-content" id="poolCharsContent">
+        <div class="pool-filter-bar">
+          <div class="meta-group">
+            <input type="text" id="charSearch" class="text-input" placeholder="🔍 Tìm nhân vật theo tên, liên kết..." style="width: 270px;" oninput="filterChars()">
+          </div>
+          <div class="filter-btn-group" id="costFilters">
+            <span class="filter-chip active" onclick="setCostFilter(0, this)">Tất cả Cost</span>
+            <span class="filter-chip" onclick="setCostFilter(5, this)">5 Cost (Vàng)</span>
+            <span class="filter-chip" onclick="setCostFilter(4, this)">4 Cost (Tím)</span>
+            <span class="filter-chip" onclick="setCostFilter(3, this)">3 Cost (Lam)</span>
+            <span class="filter-chip" onclick="setCostFilter(2, this)">2 Cost (Lục)</span>
+            <span class="filter-chip" onclick="setCostFilter(1, this)">1 Cost (Xám)</span>
+          </div>
+        </div>
+        <div class="pool-grid-scroll">
+          <div class="char-picker-grid" id="charGrid"></div>
+        </div>
+      </div>
+
+      <!-- Tab Gears -->
+      <div class="pool-content" id="poolGearsContent" style="display: none;">
+        <div class="pool-filter-bar">
+          <div class="meta-group">
+            <input type="text" id="gearSearch" class="text-input" placeholder="🔍 Tìm trang bị theo tên..." style="width: 270px;" oninput="filterGears()">
+          </div>
+          <div style="font-size: 12.5px; color: var(--text-muted);">
+            💡 Nhấp vào ô trang bị dưới chân nhân vật Trên Sân, rồi nhấp vào trang bị dưới đây (hoặc kéo thả trang bị vào ô).
+          </div>
+        </div>
+        <div class="pool-grid-scroll">
+          <div class="gear-picker-grid" id="gearGrid"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal: Export Code -->
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">✨ Mã JSON Đội Hình Đã Xuất</h3>
+        <button class="btn-close" onclick="closeExportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted);">
+          📋 Sao chép đoạn mã dưới đây và dán vào mảng <code style="color:var(--accent-gold);">const TEAMS = [ ... ];</code> trong file <code style="color:#fff;">index.html</code> (thay vào vị trí slot tương ứng).
+        </p>
+        <textarea id="exportTextarea" class="code-output" readonly></textarea>
+        <div style="display:flex; justify-content: flex-end; gap: 8px;">
+          <button class="btn btn-dark" onclick="closeExportModal()">Đóng</button>
+          <button class="btn btn-gold" onclick="copyExportText()">📋 Sao Chép Mã</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Import Code -->
+  <div class="modal-backdrop" id="importModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">📥 Nhập Mã JSON Để Sửa</h3>
+        <button class="btn-close" onclick="closeImportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Dán đoạn object JSON của đội hình bạn muốn chỉnh sửa vào đây (ví dụ 1 team trong TEAMS):
+        </p>
+        <textarea id="importTextarea" class="code-output" placeholder='{"id": "team_2", "name": "...", ...}'></textarea>
+        <div style="display:flex; justify-content: flex-end; gap: 8px;">
+          <button class="btn btn-dark" onclick="closeImportModal()">Hủy</button>
+          <button class="btn btn-cyan" onclick="doImportJson()">Tải Lên Bàn Tạo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toastMsg">✓ Đã sao chép vào bộ nhớ tạm!</div>
+
+  <script>
+    // ===== DATA POOLS =====
+    const CHARACTERS = [{"id":1,"name":"Kafka","tier_name":"Kafka","avatar":"01_Kafka.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Thợ Săn Stellaron","Sát Thương Duy Trì"],"talents":{"tren_san":{"name":"Ngôn Linh Phược","tags":["Thiên Phú"],"desc":"Đòn Đánh Theo Sau sẽ tấn công toàn bộ phe địch và kích hoạt Sát Thương Duy Trì. Sau khi vào chiến đấu, khống chế tâm trí mục tiêu phe địch, khiến nó tấn công kẻ địch khác."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["tho_san_stellaron","sat_thuong_duy_tri"]},{"id":2,"name":"Clara","tier_name":"Clara","avatar":"02_Clara.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Nhà Du Hành","Phản Kích","Thợ Cơ Giới Tài Ba"],"talents":{"tren_san":{"name":"Bậc Thầy Cải Tạo","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Có thể cải tạo cường hóa Svarog theo nhiều hướng, mỗi lần cải tạo đều có thể tăng sát thương bản thân. Hãy lắp ráp Svarog của riêng bạn nào!"}},"cost":5,"cost_hex":"#f1c40f","link_ids":["nha_du_hanh","phan_kich","tho_co_gioi_tai_ba"]},{"id":3,"name":"Dan Heng - Ẩm Nguyệt","tier_name":"Dan Heng • Imbibitor Lunae","avatar":"03_DanHeng.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Khiên"],"links":["Đường Ray Khai Phá","Vân Thượng Ngũ Kiêu","Song Long Ngâm"],"talents":{"tren_san":{"sub_name":"Dan Heng - Ẩm Nguyệt","name":"Rồng Sinh Bách Tướng","tags":["Thiên Phú","Tấn Công Thường"],"desc":"Có thể chọn gia nhập 1 Liên Kết trong số \"Triệu Hồi\", \"Liên Kích\", \"Trị Liệu\" hoặc \"Phản Kích\", đồng thời nhận Tăng Sức Mạnh nhân vật độc nhất. Chiến Kỹ có thể tiêu hao Điểm Chiến Kỹ không giới hạn để cường hóa."},"du_bi":{"sub_name":"Dan Heng - Permansor Terrae","name":"Thân Này Là Thuyền","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Cung cấp hiệu ứng của trang bị mà bản thân đang mang cho Dan Heng - Ẩm Nguyệt. Giúp đồng đội nhận \"Hồn Rồng\", tăng Tấn Công và cung cấp Khiên cho tất cả nhân vật Trên Sân, khi \"Hồn Rồng\" hành động sẽ cung cấp Khiên và tấn công toàn bộ kẻ địch."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["duong_ray_khai_pha","van_thuong_ngu_kieu","song_long_ngam"]},{"id":4,"name":"Xueyi","tier_name":"Xueyi","avatar":"04_Xueyi.png","stars":4,"tier":"SSS","positions":["Trên Sân"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Hạm Đội Xianzhou","Phá Vỡ"],"talents":{"tren_san":{"name":"Xiềng Xích Xuyên Thân","tags":["Tuyệt Kỹ","Thiên Phú"],"desc":"Tuyệt Kỹ có thể khóa đếm ngược và hành động chủ động của kẻ địch. Khi tiểu đội phe ta tấn công mà không giảm Sức Bền cũng có thể nạp năng lượng cho Đòn Đánh Theo Sau của Xueyi, và nạp thêm khi giảm Sức Bền thành công, Đòn Đánh Theo Sau gây nhiều đòn sát thương hơn."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["ham_doi_xianzhou","pha_vo"]},{"id":5,"name":"Jade","tier_name":"Jade","avatar":"05_Jade.png","stars":5,"tier":"BUGMAN","positions":["Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Thương Hội Astropolis","Đánh Lan","Người Quản Lý Chợ Đen"],"talents":{"du_bi":{"name":"Chiến Tranh Tiền Tệ","tags":["Tấn Công Thường","Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khiến nhân vật Trên Sân trở thành \"Người Thu Nợ\", sau khi tấn công sẽ tích lũy Nạp Năng Lượng cho Jade để phát động tấn công. Khi Jade hành động sẽ tấn công kẻ địch, thi triển Tuyệt Kỹ có thể tấn công toàn bộ kẻ địch và cường hóa Đòn Đánh Theo Sau."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["thuong_hoi_astropolis","danh_lan","nguoi_quan_ly_cho_den"]},{"id":6,"name":"Aglaea","tier_name":"Aglaea","avatar":"06_Aglaea.png","stars":5,"tier":"My turn","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Vườn Kỳ Thú","Liên Kích"],"talents":{"tren_san":{"name":"Hoa Hồng Vàng Nở Rộ Trên Mũi Kiếm","tags":["Thiên Phú"],"desc":"Ở trạng thái \"Tư Thế Tối Cao\", hành động của Aglaea và đồng đội sẽ tích lũy \"Mũi Kiếm\" cho cô ấy để nâng cấp lưỡi kiếm, gây thêm nhiều Sát Thương Chuẩn sau Tấn Công Phối Hợp. \"Tỷ Lệ Liên Kích\" cơ bản: 25%."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["vuon_ky_thu","lien_kich"]},{"id":7,"name":"Phainon","tier_name":"Phainon","avatar":"07_Phainon.png","stars":5,"tier":"ISOLATION","extra_tiers":["Isolation — Siêu Máy Hốc"],"positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Đại Khách Sạn Hoàng Kim","Hành Giả Trộm Lửa"],"talents":{"tren_san":{"name":"Hành Giả Trộm Lửa","tags":["Thiên Phú"],"desc":"Ở giai đoạn chuẩn bị chiến đấu, có thể kéo nhân vật cho Phainon để chuyển hóa thành \"Lửa Củi\", tăng Buff Sát Thương và Buff Tốc Độ của Phainon. Khi vào chiến đấu, tạm thời chuyển hóa nhân vật Trên Sân phe ta thành \"Lửa Củi\". Số \"Lửa Củi\" hiện tại: 0"}},"cost":5,"cost_hex":"#f1c40f","link_ids":["dai_khach_san_hoang_kim","hanh_gia_trom_lua"]},{"id":8,"name":"Ashveil","tier_name":"Ashveil","avatar":"08_Ashveil.png","stars":5,"tier":"S","positions":["Dự Bị"],"roles":["Gây Sát Thương"],"links":["Trò Chơi Huyễn Nguyệt","Đòn Đánh Theo Sau","Cảnh Binh Thiên Hà"],"talents":{"du_bi":{"name":"Suyt...","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Tuyệt Kỹ có thể tấn công toàn bộ phe địch, Đòn Đánh Theo Sau cường hóa của Ashveil sẽ gây nhiều đòn sát thương hơn và tấn công toàn bộ phe địch. Có thể bổ nhiệm nhân vật Trên Sân phe ta làm Cảnh Binh Thiên Hà, hai bên cường hóa lẫn nhau dựa theo cấp sao."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["tro_choi_huyen_nguyet","don_danh_theo_sau","canh_binh_thien_ha"]},{"id":9,"name":"Vua Pom-Pom","tier_name":"King Pom-Pom","avatar":"09_VuaPom.png","stars":1,"tier":"B","positions":["Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Đường Ray Khai Phá"],"talents":{"du_bi":{"name":"Pa!","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động tấn công toàn bộ phe địch và khiến sát thương chúng phải chịu tăng. Khi đầy Năng Lượng thi triển Tuyệt Kỹ tấn công kẻ địch, đồng thời gây thêm Sát Thương Chuẩn dựa trên sát thương tiểu đội phe ta đã gây ra."}},"cost":5,"cost_hex":"#f1c40f","link_ids":["duong_ray_khai_pha"]},{"id":10,"name":"Serval","tier_name":"Serval","avatar":"10_Serval.png","stars":4,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Ban Nhạc Thiếu Nữ","Sát Thương Duy Trì"],"talents":{"tren_san":{"name":"Dòng Điện Tương Sinh","tags":["Chiến Kỹ","Thiên Phú","Tuyệt Kỹ"],"desc":"Chiến Kỹ có thể giáng nhiều sét hơn, khiến kẻ địch rơi vào Sát Thương Duy Trì có thể cộng dồn, đồng thời tăng số sét của Chiến Kỹ lần tiếp theo. Tuyệt Kỹ có thể kích hoạt Sát Thương Duy Trì của toàn bộ phe địch."}},"cost":4,"cost_hex":"#a55eea","link_ids":["ban_nhac_thieu_nu","sat_thuong_duy_tri"]},{"id":11,"name":"Blade","tier_name":"Blade","avatar":"11_Blade.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Vân Thượng Ngũ Kiêu","Phản Kích"],"talents":{"tren_san":{"name":"Thân Bất Tử","tags":["Thiên Phú","Tuyệt Kỹ"],"desc":"Khi Blade rơi vào trạng thái Không Thể Chiến Đấu sẽ không bị trừ Điểm Hành Động, đồng thời cường hóa bản thân, lập tức hồi HP và thi triển Đòn Đánh Theo Sau. Khi nhận trị liệu hoặc Khiên sẽ chuyển thành tiêu hao HP bản thân."},"du_bi":{"name":"Thân Bất Tử","tags":["Thiên Phú","Tấn Công Thường","Tuyệt Kỹ"],"desc":"Sau khi nhân vật Trên Sân phe ta bị tấn công hoặc tiêu hao HP, Blade sẽ tiêu hao HP bản thân để thi triển Đòn Đánh Theo Sau. Khi hành động, Blade thi triển Tấn Công Thường Cường Hóa, khi HP thấp sẽ cường hóa nhân vật Trên Sân phe ta và thi triển Tuyệt Kỹ."}},"cost":4,"cost_hex":"#a55eea","link_ids":["van_thuong_ngu_kieu","phan_kich"]},{"id":12,"name":"Hanya","tier_name":"Hanya","avatar":"12_Hanya.png","stars":4,"tier":"A","positions":["Dự Bị"],"roles":["Hỗ Trợ"],"links":["Hạm Đội Xianzhou","Liên Kích"],"talents":{"du_bi":{"name":"Phán Phạt Nghiệp Báo","tags":["Chiến Kỹ","Tuyệt Kỹ"],"desc":"Chiến Kỹ khiến kẻ địch Trọng Thương, đồng thời sau khi bị tấn công sẽ chịu thêm sát thương. Tuyệt Kỹ giúp mục tiêu nhận \"Tỷ Lệ Liên Kích\", đồng thời tăng Tốc Độ và Tấn Công của tiểu đội phe ta. \"Tỷ Lệ Liên Kích\" cơ bản: 15%."}},"cost":4,"cost_hex":"#a55eea","link_ids":["ham_doi_xianzhou","lien_kich"]},{"id":13,"name":"Huohuo","tier_name":"Huohuo","avatar":"13_Huohuo.png","stars":5,"tier":"A","positions":["Dự Bị"],"roles":["Trị Liệu","Hỗ Trợ"],"links":["Người Khổng Lồ Tí Hon","Năng Lượng","Trị Liệu"],"talents":{"du_bi":{"name":"Bùa Trấn Linh","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ lên kẻ địch, khiến sát thương chúng gây ra giảm, đồng thời sau khi bị tấn công sẽ chịu thêm Sát Thương Chuẩn. Thi triển Tuyệt Kỹ có thể hồi Năng Lượng cho tiểu đội, đồng thời tích lũy Nạp Năng Lượng để tự động trị liệu đồng đội có HP thấp."}},"cost":4,"cost_hex":"#a55eea","link_ids":["nguoi_khong_lo_ti_hon","nang_luong","tri_lieu"]},{"id":14,"name":"Aventurine","tier_name":"Aventurine","avatar":"14_Aventurine.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Khiên","Gây Sát Thương"],"links":["Nhà Du Hành","Đòn Đánh Theo Sau","Bảo Vệ"],"talents":{"tren_san":{"name":"Nước Cờ Tù Nhân","tags":["Chiến Kỹ"],"desc":"Nhận Đòn Đánh Theo Sau mới có thể tấn công toàn bộ phe địch, thi triển Đòn Đánh Theo Sau hoặc Tuyệt Kỹ có thể nạp năng lượng cho kỹ năng này, Tỷ Lệ Đòn Đánh May Mắn của Aventurine càng cao thì nạp càng nhanh. Cung cấp nhiều Khiên hơn và tăng Tỷ Lệ Đòn Đánh May Mắn của toàn đội."},"du_bi":{"name":"Nước Cờ Tù Nhân","tags":["Tuyệt Kỹ"],"desc":"Nhận Đòn Đánh Theo Sau mới có thể tấn công toàn bộ phe địch, thi triển Đòn Đánh Theo Sau hoặc Tuyệt Kỹ có thể nạp năng lượng cho kỹ năng này, Tỷ Lệ Đòn Đánh May Mắn của Aventurine càng cao thì nạp càng nhanh. Tăng Tỷ Lệ Đòn Đánh May Mắn của toàn đội, đồng thời cung cấp Khiên khi hành động."}},"cost":4,"cost_hex":"#a55eea","link_ids":["nha_du_hanh","don_danh_theo_sau","bao_ve"]},{"id":15,"name":"Acheron","tier_name":"Acheron","avatar":"15_Acheron.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Mộng Cảnh Đan Xen","Đánh Lan"],"talents":{"tren_san":{"name":"Trở Về Hư Vô","tags":["Thiên Phú"],"desc":"Khi Acheron thi triển Tuyệt Kỹ, mỗi đòn tấn công đều có xác suất trực tiếp tiêu diệt mục tiêu. Khi tăng sao, nhận thêm nhiều Sức Mạnh Trên Sân cơ bản."}},"cost":4,"cost_hex":"#a55eea","link_ids":["mong_canh_dan_xen","danh_lan"]},{"id":16,"name":"Tribbie","tier_name":"Tribbie","avatar":"16_Tribbie.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ","Gây Sát Thương"],"links":["Người Khổng Lồ Tí Hon","Đòn Đánh Theo Sau"],"talents":{"tren_san":{"name":"Kho Tên Lửa Của Tribbie","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Sau khi tiểu đội phe ta tấn công, Đòn Đánh Theo Sau của Tribbie có thể phóng nhiều tên lửa hơn. Chiến Kỹ có thể tăng Sát Thương Đòn Đánh May Mắn của tiểu đội phe ta."},"du_bi":{"name":"Kho Tên Lửa Của Tribbie","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Sau khi tiểu đội phe ta tấn công sẽ hồi Năng Lượng cho Tribbie, khi đầy Năng Lượng thi triển Tuyệt Kỹ tấn công kẻ địch. Đòn Đánh Theo Sau của Tribbie có thể phóng nhiều tên lửa hơn, Chiến Kỹ có thể tăng Sát Thương Đòn Đánh May Mắn của tiểu đội phe ta."}},"cost":4,"cost_hex":"#a55eea","link_ids":["nguoi_khong_lo_ti_hon","don_danh_theo_sau"]},{"id":17,"name":"Hyacine","tier_name":"Hyacine","avatar":"17_Hyacine.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Trị Liệu","Gây Sát Thương"],"links":["Vườn Kỳ Thú","Triệu Hồi","Trị Liệu"],"talents":{"tren_san":{"name":"Trời Ơi, Hãy Hửng Nắng!","tags":["Thiên Phú"],"desc":"Có thể tự động trị liệu cho nhân vật Trên Sân phe ta khi HP của họ thấp, thi triển Tuyệt Kỹ có thể khôi phục số lần. Tăng Buff Tốc Độ của tiểu đội phe ta."},"du_bi":{"name":"Trời Ơi, Hãy Hửng Nắng!","tags":["Thiên Phú","Kỹ Năng Linh Hồn Ký Ức","Thiên Phú Linh Hồn Ký Ức","Chiến Kỹ","Tuyệt Kỹ"],"desc":"Khi hành động, thi triển Chiến Kỹ trị liệu nhân vật Trên Sân. Có thể tự động trị liệu cho nhân vật Trên Sân phe ta khi HP của họ thấp, khi đầy Năng Lượng thi triển Tuyệt Kỹ và khôi phục số lần tự động trị liệu. Tăng Buff Tốc Độ của tiểu đội phe ta."}},"cost":4,"cost_hex":"#a55eea","link_ids":["vuon_ky_thu","trieu_hoi","tri_lieu"]},{"id":18,"name":"Cyrene","tier_name":"Cyrene","avatar":"18_Cyrene.png","stars":5,"tier":"S","extra_tiers":["Farmcontent — Rớt Đài"],"positions":["Trên Sân"],"roles":["Hỗ Trợ"],"links":["Đại Khách Sạn Hoàng Kim","Triệu Hồi"],"talents":{"tren_san":{"name":"Bài Thơ Lời Thề","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Kết giới giúp nhân vật Dự Bị phe ta cũng có thể gây Sát Thương Chuẩn, Tuyệt Kỹ có thể kích hoạt Tuyệt Kỹ của nhân vật Dự Bị phe ta. Khi bắt đầu mỗi đợt, gây thêm Sát Thương Chuẩn cho toàn bộ phe địch."}},"cost":4,"cost_hex":"#a55eea","link_ids":["dai_khach_san_hoang_kim","trieu_hoi"]},{"id":19,"name":"Mortenax Blade","tier_name":"Mortenax Blade","avatar":"19_Mortenax.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Trò Chơi Huyễn Nguyệt","Thợ Săn Stellaron","Đánh Lan"],"talents":{"tren_san":{"name":"Thân Ta Chính Là Lưỡi Dao","tags":["Thiên Phú"],"desc":"Dựa theo số trang bị của phe ta, tăng sát thương của thành viên mang nhiều trang bị nhất, đồng thời gây Sát Thương Kèm Theo sau khi tấn công."},"du_bi":{"name":"Thân Ta Chính Là Lưỡi Dao","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động tấn công toàn bộ phe địch. Khi vào chiến đấu, triển khai kết giới làm suy yếu phe địch và buff phe ta, tấn công của tiểu đội có thể giúp Mortenax Blade thi triển thêm Chiến Kỹ. Dựa theo số trang bị của phe ta, cường hóa thành viên mang nhiều trang bị nhất."}},"cost":4,"cost_hex":"#a55eea","link_ids":["tro_choi_huyen_nguyet","tho_san_stellaron","danh_lan"]},{"id":20,"name":"Himeko - Nova","tier_name":"Himeko • Nova","avatar":"20_Himeko.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Đường Ray Khai Phá","Năng Lượng"],"talents":{"tren_san":{"name":"Hành Trình Sao Khởi Minh","tags":["Thiên Phú"],"desc":"Sau khi đồng đội thi triển Kỹ Năng Trợ Chiến, số đòn Tuyệt Kỹ của Himeko - Nova tăng, đồng thời nhận nhiều loại buff trong hai loại \"Giao Ước Đồng Hành\", sau khi đồng đội thi triển Tuyệt Kỹ sẽ phát động thêm Kỹ Năng Trợ Chiến. Nhân vật Dự Bị cũng có thể thi triển Kỹ Năng Trợ Chiến."}},"cost":4,"cost_hex":"#a55eea","link_ids":["duong_ray_khai_pha","nang_luong"]},{"id":21,"name":"Aventurine - Waveflair","tier_name":"Aventurine • Waveflair","avatar":"21_Aventurin.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Thương Hội Astropolis","Vui Vẻ"],"talents":{"tren_san":{"name":"Nâng Chén Mùa Hè","tags":["Thiên Phú"],"desc":"Khi vào chiến đấu, uống SoulGlad thả ga! Tạm thời tăng 1 sao cho 1 nhân vật có COST thấp hơn bản thân. Aventurine - Waveflair sẽ đồng thời nhận nhiều hiệu ứng trong Vết Tích."}},"cost":4,"cost_hex":"#a55eea","link_ids":["thuong_hoi_astropolis","vui_ve"]},{"id":22,"name":"Luocha","tier_name":"Luocha","avatar":"22_Luocha.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Trị Liệu","Hỗ Trợ"],"links":["Nhà Du Hành","Trị Liệu"],"talents":{"tren_san":{"name":"Hoa Trắng Không Tàn","tags":["Chiến Kỹ","Thiên Phú","Tuyệt Kỹ"],"desc":"Có thể tự động trị liệu đồng đội máu thấp nhiều lần. Kết giới của Thiên Phú sau khi triển khai sẽ tồn tại vĩnh viễn, đồng thời tăng thêm sát thương tiểu đội phe ta gây ra."},"du_bi":{"name":"Hoa Trắng Không Tàn","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Mở kết giới trị liệu giúp phe ta hồi HP sau khi phát động tấn công. Chiến Kỹ trị liệu cho 1 đồng đội và tích lũy \"Cấp Cứu\", có thể tự động trị liệu cho đồng đội có HP tương đối thấp."}},"cost":3,"cost_hex":"#3867d6","link_ids":["nha_du_hanh","tri_lieu"]},{"id":23,"name":"Fu Xuan","tier_name":"Fu Xuan","avatar":"23_FuXuan.png","stars":5,"tier":"S","positions":["Dự Bị"],"roles":["Trị Liệu","Hỗ Trợ"],"links":["Người Khổng Lồ Tí Hon","Phản Kích","Bảo Vệ"],"talents":{"du_bi":{"name":"Thần Cơ Diệu Toán","tags":["Thiên Phú","Tuyệt Kỹ"],"desc":"Nhân vật Trên Sân chia sẻ sát thương phải chịu, đồng thời giúp tiểu đội phe ta nhận buff. Khi đầy Năng Lượng thi triển Tuyệt Kỹ tấn công kẻ địch và nhận Nạp Năng Lượng, để tự động trị liệu đồng đội có HP thấp. Tăng Sức Mạnh Khiên có thể hồi nhiều Năng Lượng hơn."}},"cost":3,"cost_hex":"#3867d6","link_ids":["nguoi_khong_lo_ti_hon","phan_kich","bao_ve"]},{"id":24,"name":"Jingliu","tier_name":"Jingliu","avatar":"24_Jingliu.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Vân Thượng Ngũ Kiêu","Liên Kích"],"talents":{"tren_san":{"name":"Kiếm Tiên Trăng Lạnh","tags":["Thiên Phú"],"desc":"Chiến Kỹ Cường Hóa có xác suất tiêu hao toàn bộ Nạp Năng Lượng để gây thêm sát thương. Sau đó \"Chuyển Hồn\" lại và hồi Nạp Năng Lượng, đồng thời tăng sát thương tiểu đội phe ta. \"Tỷ Lệ Liên Kích\" cơ bản: 20%."}},"cost":3,"cost_hex":"#3867d6","link_ids":["van_thuong_ngu_kieu","lien_kich"]},{"id":25,"name":"Jiaoqiu","tier_name":"Jiaoqiu","avatar":"25_Jiaoqiu.png","stars":5,"tier":"A","positions":["Trên Sân"],"roles":["Hỗ Trợ","Gây Sát Thương"],"links":["Hạm Đội Xianzhou","Sát Thương Duy Trì"],"talents":{"tren_san":{"name":"Mưu Sĩ Hồ Nhân","tags":["Thiên Phú"],"desc":"Sát Thương Duy Trì mà kẻ địch mang \"Nướng Tro\" phải chịu tăng. Trong thời gian duy trì kết giới, khi bắt đầu hiệp của kẻ địch có xác suất kích hoạt thêm Sát Thương Duy Trì."}},"cost":3,"cost_hex":"#3867d6","link_ids":["ham_doi_xianzhou","sat_thuong_duy_tri"]},{"id":26,"name":"Feixiao","tier_name":"Feixiao","avatar":"26_Feixiao.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Hạm Đội Xianzhou","Đòn Đánh Theo Sau"],"talents":{"tren_san":{"name":"Bách Chiến Thiên Kích","tags":["Thiên Phú","Tuyệt Kỹ"],"desc":"Sau khi tăng cấp sao bản thân hoặc thi triển Tuyệt Kỹ sẽ nhận EXP, có thể tăng vĩnh viễn \"Quân Hàm\" của bản thân để cường hóa Tuyệt Kỹ. Tấn công của nhân vật Dự Bị cũng cung cấp \"Phi Hoàng\". \"Quân Hàm\" hiện tại: Tân Binh 0/20."}},"cost":3,"cost_hex":"#3867d6","link_ids":["ham_doi_xianzhou","don_danh_theo_sau"]},{"id":27,"name":"Rappa","tier_name":"Rappa","avatar":"27_Rappa.png","stars":5,"tier":"B","positions":["Dự Bị"],"roles":["Gây Sát Thương"],"links":["Ban Nhạc Thiếu Nữ","Phá Vỡ"],"talents":{"du_bi":{"name":"Nhẫn Pháp Hỗn Loạn","tags":["Tấn Công Thường","Thiên Phú"],"desc":"Luôn ở trạng thái \"Kết Ấn\", khi hành động phát động Tấn Công Thường Cường Hóa giảm Sức Bền bỏ qua Điểm Yếu. Mỗi lần kẻ địch bị phá vỡ, đều cường hóa đòn tấn công tiếp theo của Rappa và tăng Tốc Độ của cô ấy."}},"cost":3,"cost_hex":"#3867d6","link_ids":["ban_nhac_thieu_nu","pha_vo"]},{"id":28,"name":"The Dahlia","tier_name":"The Dahlia","avatar":"28_Dahlia.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ"],"links":["Mộng Cảnh Đan Xen","Phá Vỡ"],"talents":{"tren_san":{"name":"Múa! Múa! Múa!","tags":["Thiên Phú"],"desc":"Khiến toàn bộ tiểu đội phe ta trở thành \"Bạn Nhảy\", đồng thời toàn đội tăng Xuyên Kháng toàn thuộc tính dựa theo tổng cấp sao của \"Bạn Nhảy\"."},"du_bi":{"name":"Múa! Múa! Múa!","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Kẻ địch không ở Trạng Thái Phá Vỡ Điểm Yếu cũng có thể chịu Siêu Sát Thương Phá Vỡ. Toàn bộ tiểu đội phe ta trở thành \"Bạn Nhảy\", Tấn Công Kích Phá của \"Bạn Nhảy\" tăng, khi giảm Sức Bền có thể gây Siêu Sát Thương Phá Vỡ. Tiểu đội phe ta tăng Xuyên Kháng toàn thuộc tính dựa theo tổng cấp sao của \"Bạn Nhảy\"."}},"cost":3,"cost_hex":"#3867d6","link_ids":["mong_canh_dan_xen","pha_vo"]},{"id":29,"name":"Cipher","tier_name":"Cipher","avatar":"29_Cipher.png","stars":4,"tier":"S","positions":["Dự Bị"],"roles":["Hỗ Trợ"],"links":["Vườn Kỳ Thú","Đánh Lan"],"talents":{"du_bi":{"name":"Quỷ Kế Thần Tốc","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Có thể thi triển Chiến Kỹ và Tuyệt Kỹ gây sát thương cho toàn bộ phe địch. Có trang bị đặc biệt \u0027Đồng Xu Sấp Ngửa\u0027, tích lũy nạp năng lượng khi kẻ địch bị tiêu diệt, để tăng bội số tích lũy giá trị ghi lại của Thiên Phú, đồng thời cung cấp Xu Vàng trước Điểm Mốc Thủ Lĩnh."}},"cost":3,"cost_hex":"#3867d6","link_ids":["vuon_ky_thu","danh_lan"]},{"id":30,"name":"Castorice","tier_name":"Castorice","avatar":"30_Castorice.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Đại Khách Sạn Hoàng Kim","Triệu Hồi"],"talents":{"tren_san":{"name":"Nhụy Hoa Rồng Tử Vong","tags":["Chiến Kỹ","Thiên Phú"],"desc":"HP dư thừa của Rồng Tử Vong sẽ chuyển hóa thành \"Nhụy Hoa\" của Castorice sau khi nó biến mất, Chiến Kỹ có thể gây nhiều sát thương hơn."}},"cost":3,"cost_hex":"#3867d6","link_ids":["dai_khach_san_hoang_kim","trieu_hoi"]},{"id":31,"name":"Yao Guang","tier_name":"Yao Guang","avatar":"31_YaoGuang.png","stars":5,"tier":"A","positions":["Dự Bị"],"roles":["Hỗ Trợ"],"links":["Thương Hội Astropolis","Vui Vẻ"],"talents":{"du_bi":{"name":"Quẻ Thượng Thượng","tags":["Tấn Công Thường","Chiến Kỹ","Tuyệt Kỹ","Thiên Phú","Kỹ Năng Vui Vẻ"],"desc":"Sau khi tiểu đội phe ta tấn công sẽ gây Sát Thương Kèm Theo nhiều lần cho toàn bộ phe địch. Khi hành động tấn công kẻ địch. Sau khi đầy Năng Lượng thi triển Tuyệt Kỹ và nhận thêm Điểm Hài Hước."}},"cost":3,"cost_hex":"#3867d6","link_ids":["thuong_hoi_astropolis","vui_ve"]},{"id":32,"name":"Sói Bạc LV.999","tier_name":"Silver Wolf LV.999","avatar":"32_SoiBacL.png","stars":5,"tier":"BUGMAN","extra_tiers":["Farmcontent — Rớt Đài"],"positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Trò Chơi Huyễn Nguyệt","Thợ Săn Stellaron","Vui Vẻ"],"talents":{"tren_san":{"name":"Người Chơi Hàng Đầu?!","tags":["Thiên Phú"],"desc":"Giới hạn bậc \"Điểm Ẩn\" tăng 1 bậc. Tấn Công Thường Cường Hóa thi triển trong hiệp tăng thêm không tiêu hao số lần, Tấn Công Thường nhận buff thuộc tính của \"Aha\". Khi ra trận lần đầu và khi tăng sao, có thể mở bảng điều khiển (?) để cường hóa bản thân."}},"cost":3,"cost_hex":"#3867d6","link_ids":["tro_choi_huyen_nguyet","tho_san_stellaron","vui_ve"]},{"id":33,"name":"Aeon Aha","tier_name":"Aeon Aha","avatar":"33_AeonAha.png","stars":5,"tier":"Skip Skip Skip Aha~","positions":["Trên Sân"],"roles":["Hỗ Trợ"],"links":["Vui Vẻ","Chúa Tể Huyễn Lạc"],"talents":{"tren_san":{"name":"Chúa Tể Ảo Lạc","tags":["Thiên Phú","Kỹ Năng Vui Vẻ"],"desc":"Tích lũy \"Sức Mạnh Huyễn Nguyệt\", trở thành Aeon! \"Vạn Tướng Vui Vẻ\" mà Aeon Aha đang có cũng sẽ giúp nhân vật Dự Bị phe ta Nâng Cấp Vận Mệnh \"Vui Vẻ\", COST càng tăng, Kỹ Năng Vui Vẻ của Ngài có thể gây nhiều sát thương hơn và Chiến Kỹ có thể cung cấp nhiều buff hơn."}},"cost":3,"cost_hex":"#3867d6","link_ids":["vui_ve","chua_te_ao_lac"]},{"id":34,"name":"Nhà Khai Phá (Luna)","tier_name":"Trailblazer","avatar":"34_Luna.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ"],"links":["Đường Ray Khai Phá","Thợ Săn Stellaron","Năng Lượng"],"talents":{"tren_san":{"name":"Streamer Nổi Tiếng","tags":["Thiên Phú"],"desc":"Biến mục tiêu của Tuyệt Kỹ thành \"Streamer Nổi Tiếng\", sau khi họ thi triển Tuyệt Kỹ có thể lập tức thi triển thêm 1 lần miễn phí, nếu không thể thi triển thì nhận 1 hiệp tăng thêm. Độ Vui Vẻ của thành viên Vận Mệnh \"Vui Vẻ\" tăng, sát thương của các thành viên còn lại tăng."},"du_bi":{"name":"Streamer Nổi Tiếng","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú","Kỹ Năng Vui Vẻ"],"desc":"Có thể thi triển Chiến Kỹ và Tuyệt Kỹ tấn công kẻ địch, đồng thời khiến mục tiêu của Tuyệt Kỹ sau khi thi triển Tuyệt Kỹ có thể lập tức thi triển thêm 1 lần miễn phí, nếu không thể thi triển thì nhận 1 hiệp tăng thêm. Độ Vui Vẻ của thành viên Vận Mệnh \"Vui Vẻ\" tăng, sát thương của các thành viên còn lại tăng."}},"cost":3,"cost_hex":"#3867d6","link_ids":["duong_ray_khai_pha","tho_san_stellaron","nang_luong"]},{"id":35,"name":"Natasha","tier_name":"Natasha","avatar":"35_Natasha.png","stars":4,"tier":"S","positions":["Dự Bị"],"roles":["Trị Liệu","Gây Sát Thương"],"links":["Nhà Du Hành","Sát Thương Duy Trì","Trị Liệu"],"talents":{"du_bi":{"name":"Phép Màu Trị Liệu","tags":["Tấn Công Thường","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động, Tấn Công Thường kẻ địch và gây Chảy Máu, khi đầy Năng Lượng thi triển Tuyệt Kỹ trị liệu nhân vật Trên Sân phe ta. Có thể tự động trị liệu đồng đội có HP thấp."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["nha_du_hanh","sat_thuong_duy_tri","tri_lieu"]},{"id":36,"name":"Bailu","tier_name":"Bailu","avatar":"36_Bailu.png","stars":5,"tier":"S","positions":["Dự Bị"],"roles":["Trị Liệu"],"links":["Vân Thượng Ngũ Kiêu","Liên Kích","Trị Liệu"],"talents":{"du_bi":{"name":"Cuộc Sống Vĩnh Hằng","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Khi hành động, trị liệu nhân vật Trên Sân phe ta, sau khi vào chiến đấu gắn \u0027Sinh Mệnh\u0027 cho nhân vật Trên Sân, giúp họ hồi HP sau khi bị tấn công. Có thể trị liệu một số lần có hạn cho đồng đội chịu sát thương chí tử."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["van_thuong_ngu_kieu","lien_kich","tri_lieu"]},{"id":37,"name":"Yunli","tier_name":"Yunli","avatar":"37_Yunli.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Hạm Đội Xianzhou","Phản Kích"],"talents":{"tren_san":{"name":"Thợ Thủ Công Chu Minh","tags":["Thiên Phú","Tuyệt Kỹ"],"desc":"Mang trang bị sẽ khiến Yunli mạnh hơn, Đòn Đánh Theo Sau gây thêm sát thương."},"du_bi":{"name":"Thợ Thủ Công Chu Minh","tags":["Thiên Phú","Tuyệt Kỹ"],"desc":"Khi thành viên phe ta mang trang bị sẽ gây nhiều sát thương hơn. Sau khi phe ta tấn công hoặc bị tấn công sẽ hồi Năng Lượng cho Yunli, sau khi Tuyệt Kỹ tấn công kẻ địch sẽ nhận Nạp Năng Lượng để phát động Phản Kích."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["ham_doi_xianzhou","phan_kich"]},{"id":38,"name":"Sparkle","tier_name":"Sparkle","avatar":"38_Sparkle.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Hỗ Trợ"],"links":["Người Khổng Lồ Tí Hon","Mộng Cảnh Đan Xen","Vui Vẻ"],"talents":{"tren_san":{"name":"Ảo Thuật Mặt Nạ","tags":["Tuyệt Kỹ"],"desc":"Tuyệt Kỹ khiến sát thương kẻ địch phải chịu tăng thêm, khi trên sân có \"Thời Khắc Aha\", còn nhận thêm Điểm Hài Hước."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["nguoi_khong_lo_ti_hon","mong_canh_dan_xen","vui_ve"]},{"id":39,"name":"Robin","tier_name":"Robin","avatar":"39_Robin.png","stars":5,"tier":"S","positions":["Trên Sân"],"roles":["Hỗ Trợ"],"links":["Ban Nhạc Thiếu Nữ","Đòn Đánh Theo Sau"],"talents":{"tren_san":{"name":"Hợp Tấu Đồng Ca","tags":["Chiến Kỹ","Tuyệt Kỹ"],"desc":"Trong thời gian duy trì Tuyệt Kỹ của Robin, sau khi phe ta tấn công có thể hồi Năng Lượng cho cô ấy, sau khi đầy Năng Lượng còn có thể tăng tốc đếm ngược \"Hợp Tấu\"."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["ban_nhac_thieu_nu","don_danh_theo_sau"]},{"id":40,"name":"Firefly","tier_name":"Firefly","avatar":"40_Firefly.png","stars":5,"tier":"A","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Thợ Săn Stellaron","Phá Vỡ"],"talents":{"tren_san":{"name":"Đom Đóm Lao Vào Lửa, Hướng Về Cái Chết Để Sống","tags":["Thiên Phú"],"desc":"Trong trạng thái Hoàn Toàn Thiêu Đốt, đòn tấn công của Firefly giảm mạnh Sức Bền của kẻ địch, đồng thời gây Siêu Sát Thương Phá Vỡ cực lớn."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["tho_san_stellaron","pha_vo"]},{"id":41,"name":"Sunday","tier_name":"Sunday","avatar":"41_Sunday.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ"],"links":["Trò Chơi Huyễn Nguyệt","Đường Ray Khai Phá","Liên Kích"],"talents":{"tren_san":{"name":"Ân Huệ Phúc Trạch","tags":["Tuyệt Kỹ","Thiên Phú"],"desc":"Tốc Độ của \"Chân Phước\" tăng, đồng thời Sát Thương Bạo Kích của tiểu đội phe ta tăng. \"Tỷ Lệ Liên Kích\" cơ bản: 15%."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["tro_choi_huyen_nguyet","duong_ray_khai_pha","lien_kich"]},{"id":42,"name":"Đại Herta","tier_name":"The Herta","avatar":"42_DaiHerta.png","stars":5,"tier":"A","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Nhà Du Hành","Đánh Lan"],"talents":{"tren_san":{"name":"Đáp Án Tối Thượng Của Vũ Trụ","tags":["Thiên Phú"],"desc":"Tăng số tầng ban đầu và giới hạn của \"Diễn Giải\", đồng thời khiến kẻ địch rơi vào thêm Trọng Thương. Số tầng càng cao, sát thương Chiến Kỹ Cường Hóa và sát thương kẻ địch phải chịu càng cao."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["nha_du_hanh","danh_lan"]},{"id":43,"name":"Mydei","tier_name":"Mydei","avatar":"43_Mydei.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Vườn Kỳ Thú","Đại Khách Sạn Hoàng Kim","Phản Kích"],"talents":{"tren_san":{"name":"Sư Tử Cuồng Nộ Tắm Máu","tags":["Thiên Phú"],"desc":"Buff Sát Thương tăng mạnh theo cấp sao. Khi thi triển \"Sát Thần Đăng Thần\" tạm thời nhận Buff HP, giới hạn HP càng cao thì nạp năng lượng khi bị đánh càng nhanh."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["vuon_ky_thu","dai_khach_san_hoang_kim","phan_kich"]},{"id":44,"name":"Hysilens","tier_name":"Hysilens","avatar":"44_Hysilens.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Vườn Kỳ Thú","Sát Thương Duy Trì"],"talents":{"du_bi":{"name":"Bữa Tiệc Không Hồi Kết","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ tấn công kẻ địch. Có thể thi triển Tuyệt Kỹ kích hoạt Sát Thương Duy Trì và mở kết giới, sau mỗi lần thi triển, bội số hiệu ứng Sát Thương Duy Trì Vật Lý của kết giới tăng vĩnh viễn, đồng thời hồi Năng Lượng khi kích hoạt. Bội số hiện tăng: 0%."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["vuon_ky_thu","sat_thuong_duy_tri"]},{"id":45,"name":"Evanescia","tier_name":"Evanescia","avatar":"45_Evanescia.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Trò Chơi Huyễn Nguyệt","Năng Lượng"],"talents":{"tren_san":{"name":"Trọng Tài Huyễn Nguyệt","tags":["Thiên Phú"],"desc":"Evanescia sẽ nhận các buff khác nhau dựa trên quy tắc của \"Trò Chơi Huyễn Nguyệt\". Khi thi triển Tuyệt Kỹ tăng vĩnh viễn Buff Sát Thương. Hiện tại tăng: 0%."},"du_bi":{"name":"Trọng Tài Huyễn Nguyệt","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú","Kỹ Năng Vui Vẻ"],"desc":"Evanescia sẽ nhận các buff khác nhau dựa trên quy tắc của \"Trò Chơi Huyễn Nguyệt\". Khi phe ta nhận \"Việc Tốt Đáng Thưởng\", nhận \"Việc Tốt Đáng Thưởng\" và Năng Lượng, khi thi triển Tuyệt Kỹ tăng vĩnh viễn Buff Sát Thương. Hiện tại tăng: 0%."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["tro_choi_huyen_nguyet","nang_luong"]},{"id":46,"name":"Robin - Summeretto","tier_name":"Robin • Summerette","avatar":"46_RobinS.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ"],"links":["Thương Hội Astropolis","Triệu Hồi","Năng Lượng"],"talents":{"tren_san":{"name":"Sóng Âm Giữa Hạ","tags":["Thiên Phú"],"desc":"Tiểu đội phe ta càng nhiều thành viên, Sát Thương Bạo Kích của toàn đội càng cao."},"du_bi":{"name":"Sóng Âm Giữa Hạ","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú","Kỹ Năng Linh Hồn Ký Ức","Thiên Phú Linh Hồn Ký Ức"],"desc":"Triệu Hồi Linh Hồn Ký Ức tấn công kẻ địch, khi đầy Năng Lượng thi triển Tuyệt Kỹ giúp mục tiêu Ưu Tiên Hành Động và hồi Năng Lượng. Sau khi Điểm Sôi Động đầy sẽ vào trạng thái \"Fever\", đồng thời cung cấp nhiều loại buff cho phe ta."}},"cost":2,"cost_hex":"#20bf6b","link_ids":["thuong_hoi_astropolis","trieu_hoi","nang_luong"]},{"id":47,"name":"Welt","tier_name":"Welt","avatar":"47_Welt.png","stars":5,"tier":"My turn","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Đường Ray Khai Phá","Đánh Lan"],"talents":{"tren_san":{"name":"Hố Đen Hấp Dẫn","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Chiến Kỹ tấn công toàn bộ phe địch và có xác suất Giảm Tốc; khi tấn công kẻ địch bị Giảm Tốc, gây Sát Thương Kèm Theo cho tất cả kẻ địch đang ở trạng thái Giảm Tốc."},"du_bi":{"name":"Hố Đen Hấp Dẫn","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ tấn công toàn bộ phe địch và có xác suất Giảm Tốc; khi tấn công kẻ địch bị Giảm Tốc, gây Sát Thương Kèm Theo cho tất cả kẻ địch đang ở trạng thái Giảm Tốc."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["duong_ray_khai_pha","danh_lan"]},{"id":48,"name":"Topaz \u0026 Numby","tier_name":"Topaz \u0026 Numby","avatar":"48_Topaz.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Thương Hội Astropolis","Đòn Đánh Theo Sau"],"talents":{"tren_san":{"name":"Truy Thu Nợ Nần","tags":["Tuyệt Kỹ","Thiên Phú"],"desc":"Tuyệt Kỹ cường hóa Numby, khiến nó tấn công mục tiêu lân cận. \"Bằng Chứng Nợ Nần\" khiến tất cả sát thương kẻ địch phải chịu tăng."},"du_bi":{"name":"Truy Thu Nợ Nần","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ tấn công kẻ địch và mục tiêu lân cận. Khi bắt đầu chiến đấu, triệu hồi Numby, khi hành động phát động thêm Đòn Đánh Theo Sau. \"Bằng Chứng Nợ Nần\" khiến tất cả sát thương kẻ địch phải chịu tăng."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["thuong_hoi_astropolis","don_danh_theo_sau"]},{"id":49,"name":"Jing Yuan","tier_name":"Jing Yuan","avatar":"49_JingYuan.png","stars":5,"tier":"S","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Vân Thượng Ngũ Kiêu","Triệu Hồi"],"talents":{"du_bi":{"name":"Một Đòn Thiên Quân","tags":["Thiên Phú","Chiến Kỹ","Tuyệt Kỹ"],"desc":"Giới hạn cộng dồn và tốc độ cộng dồn số đòn đánh của \"Thần Quân\" tăng, đồng thời khi hành động sẽ giúp Jing Yuan Ưu Tiên Hành Động."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["van_thuong_ngu_kieu","trieu_hoi"]},{"id":50,"name":"Guinaifen","tier_name":"Guinaifen","avatar":"50_Guinaifen.png","stars":4,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ","Gây Sát Thương"],"links":["Hạm Đội Xianzhou","Sát Thương Duy Trì"],"talents":{"du_bi":{"name":"Tràng Pháo Tay Rộn Rã","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ, Chiến Kỹ gây thêm sát thương nhiều đòn. Sau khi tấn công khiến kẻ địch rơi vào trạng thái Thiêu Đốt có thể cộng dồn, đồng thời tăng Tấn Công của tiểu đội phe ta."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["ham_doi_xianzhou","sat_thuong_duy_tri"]},{"id":51,"name":"Lingsha","tier_name":"Lingsha","avatar":"51_Lingsha.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Trị Liệu","Hỗ Trợ"],"links":["Hạm Đội Xianzhou","Đánh Lan","Trị Liệu"],"talents":{"tren_san":{"name":"Fuyuan Giải Ách, Đan Hỏa Chữa Thương","tags":["Tuyệt Kỹ","Thiên Phú"],"desc":"Khi vào chiến đấu, triệu hồi \"Fuyuan\", nó có thể tự động trị liệu thành viên có HP thấp. Tuyệt Kỹ khiến kẻ địch rơi vào trạng thái Trọng Thương."},"du_bi":{"name":"Fuyuan Giải Ách, Đan Hỏa Chữa Thương","tags":["Chiến Kỹ","Tuyệt Kỹ","Thiên Phú"],"desc":"Khi vào chiến đấu, triệu hồi \"Fuyuan\", nó có thể tự động trị liệu thành viên có HP thấp. Khi Lingsha hành động sẽ tấn công kẻ địch và giúp \"Fuyuan\" Ưu Tiên Hành Động, Tuyệt Kỹ khiến kẻ địch rơi vào trạng thái Trọng Thương."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["ham_doi_xianzhou","danh_lan","tri_lieu"]},{"id":52,"name":"March 7th","tier_name":"March 7th","avatar":"52_March7th.png","stars":4,"tier":"S","positions":["Dự Bị"],"roles":["Hỗ Trợ","Gây Sát Thương"],"links":["Đường Ray Khai Phá","Đòn Đánh Theo Sau"],"talents":{"du_bi":{"name":"Bái Sư Học Nghệ","tags":["Chiến Kỹ","Tấn Công Thường"],"desc":"Khi hành động, thi triển Tấn Công Thường Cường Hóa. Sau khi vào chiến đấu, khiến 1 nhân vật Trên Sân trở thành \"Sư Phụ\", cung cấp buff cho họ dựa trên Sức Mạnh Dự Bị của March 7th. Sau chiến đấu, cường hóa vĩnh viễn bản thân dựa trên Sức Mạnh Trên Sân của \"Sư Phụ\". Sức Mạnh Dự Bị hiện tăng: 0."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["duong_ray_khai_pha","don_danh_theo_sau"]},{"id":53,"name":"Fugue","tier_name":"Fugue","avatar":"53_Fugue.png","stars":5,"tier":"A","positions":["Trên Sân","Dự Bị"],"roles":["Hỗ Trợ"],"links":["Nhà Du Hành","Phá Vỡ"],"talents":{"du_bi":{"name":"Ngậm Thư Rải Lửa","tags":["Chiến Kỹ","Tấn Công Thường","Thiên Phú"],"desc":"Giúp tiểu đội phe ta có thể bỏ qua thuộc tính Điểm Yếu để giảm Sức Bền, sau khi kẻ địch rơi vào Trạng Thái Phá Vỡ Điểm Yếu sẽ dễ bị phá vỡ hơn. Khi hành động, thi triển Tấn Công Thường Cường Hóa tấn công kẻ địch."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["nha_du_hanh","pha_vo"]},{"id":54,"name":"Black Swan","tier_name":"Black Swan","avatar":"54_BlackSwan.png","stars":5,"tier":"A","positions":["Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Mộng Cảnh Đan Xen","Sát Thương Duy Trì"],"talents":{"du_bi":{"name":"Dấu Tích Bí Ẩn Trỗi Dậy","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Khi hành động, thi triển Chiến Kỹ giảm Phòng Thủ của kẻ địch, đồng thời có thể tích lũy Nạp Năng Lượng để phát động Đòn Đánh Theo Sau lên kẻ địch, tăng mạnh số tầng \"Dấu Tích Bí Ẩn\"."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["mong_canh_dan_xen","sat_thuong_duy_tri"]},{"id":55,"name":"Boothill","tier_name":"Boothill","avatar":"55_Boothill.png","stars":5,"tier":"B","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Nhà Du Hành","Phá Vỡ"],"talents":{"tren_san":{"name":"Ưu Thế Dẫn Đầu","tags":["Thiên Phú"],"desc":"Số tầng \"Cú Lừa Bỏ Túi\" có thể được kế thừa vĩnh viễn qua các trận chiến, giới hạn cộng dồn tăng mạnh. Đồng thời mỗi tầng đều tăng thêm Tấn Công Kích Phá của tiểu đội phe ta. Số tầng \"Cú Lừa Bỏ Túi\" hiện tại: 0."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["nha_du_hanh","pha_vo"]},{"id":56,"name":"Anaxa","tier_name":"Anaxa","avatar":"56_Anaxa.png","stars":5,"tier":"My turn","positions":["Trên Sân"],"roles":["Gây Sát Thương"],"links":["Vườn Kỳ Thú","Liên Kích"],"talents":{"tren_san":{"name":"Đại Nghệ Sĩ Trình Diễn","tags":["Thiên Phú"],"desc":"Anaxa thi triển Chiến Kỹ có thể tích lũy vĩnh viễn \"Kỹ Xảo Ma Thuật\", khiến các Chiến Kỹ sau đó gây thêm Sát Thương Kèm Theo thuộc tính ngẫu nhiên. Số tầng \"Kỹ Xảo Ma Thuật\" hiện tại: 0. \"Tỷ Lệ Liên Kích\" cơ bản: 20%."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["vuon_ky_thu","lien_kich"]},{"id":57,"name":"Cerydra","tier_name":"Cerydra","avatar":"57_Cerydra.png","stars":5,"tier":"A","positions":["Dự Bị"],"roles":["Hỗ Trợ"],"links":["Người Khổng Lồ Tí Hon","Liên Kích"],"talents":{"du_bi":{"name":"Vương Mệnh Tức Là Luật","tags":["Chiến Kỹ","Thiên Phú"],"desc":"Có thể sao chép Chiến Kỹ của nhân vật và thi triển thêm, đồng thời khiến họ gây thêm sát thương sau khi tấn công. Có thể sao chép Tấn Công Thường của nhân vật vốn có trong Liên Kết \"Liên Kích\". \"Tỷ Lệ Liên Kích\" cơ bản: 15%."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["nguoi_khong_lo_ti_hon","lien_kich"]},{"id":58,"name":"Evernight","tier_name":"Evernight","avatar":"58_Evernight.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương","Hỗ Trợ"],"links":["Vườn Kỳ Thú","Mộng Cảnh Đan Xen","Triệu Hồi"],"talents":{"du_bi":{"name":"Đêm Dài Biển Ký Ức","tags":["Thiên Phú","Kỹ Năng Linh Hồn Ký Ức"],"desc":"Triệu Hồi Linh Hồn Ký Ức, khiến nó tấn công kẻ địch khi hành động, và tiêu hao HP để trị liệu nhân vật Trên Sân phe ta. Sau khi hành động nhiều lần sẽ lập tức tấn công cường hóa toàn bộ kẻ địch, đồng thời khiến sát thương chúng phải chịu tăng."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["vuon_ky_thu","mong_canh_dan_xen","trieu_hoi"]},{"id":59,"name":"Sparxie","tier_name":"Sparxie","avatar":"59_Sparxie.png","stars":5,"tier":"B","positions":["Trên Sân","Dự Bị"],"roles":["Gây Sát Thương"],"links":["Trò Chơi Huyễn Nguyệt","Ban Nhạc Thiếu Nữ","Vui Vẻ"],"talents":{"tren_san":{"name":"Hiệu Ứng Ngôi Sao","tags":["Thiên Phú"],"desc":"Khi thi triển Tấn Công Thường nhận buff thuộc tính của \"Aha\", đồng thời nhận thêm Điểm Hài Hước dựa theo cấp sao của bản thân."},"du_bi":{"name":"Hiệu Ứng Ngôi Sao","tags":["Thiên Phú","Chiến Kỹ","Tấn Công Thường","Kỹ Năng Vui Vẻ"],"desc":"Khi hành động, thi triển Tấn Công Thường Cường Hóa, đồng thời nhận thêm Điểm Hài Hước dựa theo cấp sao của bản thân. Tấn Công Thường nhận buff thuộc tính của \"Aha\", đồng thời nhận Điểm Chiến Kỹ sau khi Tấn Công Thường."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["tro_choi_huyen_nguyet","ban_nhac_thieu_nu","vui_ve"]},{"id":60,"name":"Pearl","tier_name":"Pearl","avatar":"60_Pearl.png","stars":5,"tier":"A","positions":["Dự Bị"],"roles":["Trị Liệu","Hỗ Trợ"],"links":["Trò Chơi Huyễn Nguyệt","Thương Hội Astropolis","Bảo Vệ"],"talents":{"du_bi":{"name":"Nét Bút Hộ Mệnh","tags":["Tấn Công Thường","Tuyệt Kỹ","Kỹ Năng Vui Vẻ","Thiên Phú"],"desc":"Có thể dùng \"Việc Tốt Đáng Thưởng\" để chống đỡ sát thương, khi hành động thi triển Tấn Công Thường Cường Hóa tấn công kẻ địch và trị liệu nhân vật Trên Sân phe ta, khi đầy Năng Lượng thi triển Tuyệt Kỹ nhận \"Việc Tốt Đáng Thưởng\" và giúp mục tiêu Ưu Tiên Hành Động."}},"cost":1,"cost_hex":"#95a5a6","link_ids":["tro_choi_huyen_nguyet","thuong_hoi_astropolis","bao_ve"]}];
+    const GEAR_NAME = {"113_tinh_tu_truy_duoi.png": "Tinh Tú Truy Đuổi", "114_canh_quat_xoan_toc_do_anh_sang.png": "Cánh Quạt Xoắn Tốc Độ Ánh Sáng", "116_cua_dien_tan_so_cao.png": "Cưa Điện Tần Số Cao", "117_bo_truyen_tu_tin.png": "Bộ Truyền Tự Tin", "120_canh_buom_tu_nang.png": "Cánh Buồm Tụ Năng", "123_la_co_chien_thang.png": "Lá Cờ Chiến Thắng", "125_chip_chan_cam_giac_dau.png": "Chip Chặn Cảm Giác Đau", "131_dan_dam_xuyen_hanh_tinh.png": "Đạn Đâm Xuyên Hành Tinh", "132_dong_co_vinh_cuu.png": "Động Cơ Vĩnh Cửu", "137_bo_truyen_tu_tin_dac_quyen.png": "Bộ Truyền Tự Tin-Đặc Quyền", "153_ung_phan_trong_luc.png": "Ủng Phản Trọng Lực", "154_con_bao_hoa_luc.png": "Cơn Bão Hỏa Lực", "156_buoc_nhay_xoan_oc_nguoc.png": "Bước Nhảy Xoắn Ốc Ngược", "158_giay_du_hanh_sao.png": "Giày Du Hành Sao", "161_kiem_dong_luong.png": "Kiếm Động Lượng", "165_hanh_dong_chem_dau.png": "Hành Động Chém Đầu", "166_giap_tru_huyen_tao.png": "Giáp Trụ Huyễn Tạo", "167_dong_co_chuyen_cuoi_nhat.png": "Động Cơ Chuyện Cười Nhạt", "188_huy_hieu_nha_du_hanh.png": "Huy Hiệu Nhà Du Hành", "190_huy_hieu_thuong_hoi_astropolis.png": "Huy Hiệu Thương Hội Astropolis", "192_huy_hieu_nguoi_khong_lo_ti_hon.png": "Huy Hiệu Người Khổng Lồ Tí Hon", "193_huy_hieu_coi_mong_dan_xen.png": "Huy Hiệu Cõi Mộng Đan Xen", "194_huy_hieu_nha_hang_hoang_kim.png": "Huy Hiệu Nhà Hàng Hoàng Kim", "197_huy_hieu_danh_lan.png": "Huy Hiệu Đánh Lan"};
+
+    const charMap = {};
+    CHARACTERS.forEach(function(c) { charMap[c.id] = c; });
+
+    // In-game authentic placeholder SVG (Hexagon with top and bottom lines)
+    const EMPTY_SLOT_SVG = '<svg class="empty-slot-icon" width="22" height="42" viewBox="0 0 22 42" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"><line x1="11" y1="0" x2="11" y2="10" /><polygon points="11,10 18,15 18,27 11,32 4,27 4,15" /><line x1="11" y1="32" x2="11" y2="42" /></svg>';
+
+    // Corner badge SVG on filled cards
+    const CORNER_BADGE_SVG = '<div class="card-corner-badge"><svg width="10" height="13" viewBox="0 0 10 13"><rect x="0.5" y="0.5" width="9" height="12" rx="1.5" fill="#000" stroke="rgba(255,255,255,0.7)" stroke-width="1"/><rect x="2.5" y="2.5" width="5" height="3" fill="#fff"/></svg></div>';
+
+    // ===== PRESET TEAMS =====
+    const PRESETS = {
+      team_1: {
+        id: "team_1",
+        name: "Nuke Phainon",
+        rank: 1,
+        code: "NUKE-PHAINON-01",
+        tren_san: [7, 18, 38, 39],
+        du_bi: [35, 23, 42, 41, 46, 22, 36, 57, 13],
+        tren_stars: [2, 2, 2, 2],
+        du_stars: [1, 1, 2, 2, 1, 1, 1, 1, 1],
+        tren_gear: [
+          ["193_huy_hieu_coi_mong_dan_xen.png", "190_huy_hieu_thuong_hoi_astropolis.png", "188_huy_hieu_nha_du_hanh.png"],
+          ["192_huy_hieu_nguoi_khong_lo_ti_hon.png", "188_huy_hieu_nha_du_hanh.png", "132_dong_co_vinh_cuu.png"],
+          ["188_huy_hieu_nha_du_hanh.png", "137_bo_truyen_tu_tin_dac_quyen.png", "137_bo_truyen_tu_tin_dac_quyen.png"],
+          ["192_huy_hieu_nguoi_khong_lo_ti_hon.png", "188_huy_hieu_nha_du_hanh.png", "137_bo_truyen_tu_tin_dac_quyen.png"]
+        ]
+      },
+      team_2: {
+        id: "team_2",
+        name: "vòng lặp vô tận",
+        rank: 2,
+        code: "VONGLAP-ACHERON-02",
+        tren_san: [4, 15, 38, 26],
+        du_bi: [54, 55, 11, 16, 47, null, null, null, null],
+        tren_stars: [2, 2, 2, 2],
+        du_stars: [1, 1, 2, 2, 1, null, null, null, null],
+        tren_gear: [
+          ["154_con_bao_hoa_luc.png", "132_dong_co_vinh_cuu.png", "167_dong_co_chuyen_cuoi_nhat.png"],
+          ["154_con_bao_hoa_luc.png", "132_dong_co_vinh_cuu.png", "167_dong_co_chuyen_cuoi_nhat.png"],
+          [],
+          ["154_con_bao_hoa_luc.png", "132_dong_co_vinh_cuu.png", "167_dong_co_chuyen_cuoi_nhat.png"]
+        ]
+      }
+    };
+
+    // ===== CURRENT TEAM STATE =====
+    const currentTeam = {
+      id: "team_3",
+      name: "Đội hình mới",
+      rank: 1,
+      code: "",
+      tren_san: [null, null, null, null],
+      du_bi: [null, null, null, null, null, null, null, null, null],
+      tren_stars: [null, null, null, null],
+      du_stars: [null, null, null, null, null, null, null, null, null],
+      tren_gear: [[], [], [], []],
+      du_gear: [[], [], [], [], [], [], [], [], []]
+    };
+
+    let activeTarget = { type: 'tren_san', index: 0, gearIndex: null };
+    let currentCostFilter = 0;
+
+    // ===== INIT =====
+    function initBuilder() {
+      renderBoard();
+      renderCharPool();
+      renderGearPool();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBuilder);
+    } else {
+      // DOM already ready (script at end of body)
+      initBuilder();
+    }
+
+    // ===== RENDER BOARD =====
+    function renderBoard() {
+      // 1. Trên Sân (4 slots centered)
+      const trenContainer = document.getElementById('trenSanRow');
+      trenContainer.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        trenContainer.appendChild(createSlotElement('tren_san', i));
+      }
+
+      // 2. Dự Bị (9 slots centered)
+      const duContainer = document.getElementById('duBiRow');
+      duContainer.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        duContainer.appendChild(createSlotElement('du_bi', i));
+      }
+
+      updateCounterAndSynergy();
+    }
+
+    function createSlotElement(zone, index) {
+      const charId = currentTeam[zone][index];
+      const stars = (zone === 'tren_san' ? currentTeam.tren_stars : currentTeam.du_stars)[index];
+      const gears = zone === 'tren_san' ? (currentTeam.tren_gear[index] || []) : [];
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'slot-item';
+
+      // Card frame (70x80)
+      const frame = document.createElement('div');
+      frame.className = 'card-frame';
+      if (activeTarget.type === zone && activeTarget.index === index && activeTarget.gearIndex === null) {
+        frame.classList.add('active-target');
+      }
+
+      // Drag & Drop onto frame
+      frame.ondragover = function(e) { e.preventDefault(); frame.style.borderColor = '#00f2fe'; };
+      frame.ondragleave = function() { frame.style.borderColor = ''; };
+      frame.ondrop = function(e) {
+        e.preventDefault();
+        frame.style.borderColor = '';
+        const droppedCharId = e.dataTransfer.getData('text/char-id');
+        if (droppedCharId) {
+          assignCharToSlot(zone, index, Number(droppedCharId));
+        }
+      };
+
+      // Click frame to activate
+      frame.onclick = function() {
+        setActiveTarget(zone, index, null);
+      };
+
+      if (charId && charMap[charId]) {
+        const c = charMap[charId];
+        frame.classList.add('has-char', 'gs-cost-' + (c.cost || 1));
+        
+        const img = document.createElement('img');
+        img.className = 'card-img';
+        img.src = 'avatars/' + c.avatar;
+        img.alt = c.tier_name;
+        frame.appendChild(img);
+
+        // Corner badge
+        frame.insertAdjacentHTML('beforeend', CORNER_BADGE_SVG);
+
+        // Remove char btn
+        const removeBtn = document.createElement('div');
+        removeBtn.className = 'btn-remove-char';
+        removeBtn.textContent = '✕';
+        removeBtn.title = 'Xóa nhân vật';
+        removeBtn.onclick = function(e) {
+          e.stopPropagation();
+          removeCharFromSlot(zone, index);
+        };
+        frame.appendChild(removeBtn);
+      } else {
+        frame.innerHTML = EMPTY_SLOT_SVG;
+      }
+      wrapper.appendChild(frame);
+
+      // Stars row
+      const starsRow = document.createElement('div');
+      starsRow.className = 'slot-stars-row';
+      starsRow.title = 'Nhấp để đổi số sao (Trống / 1★ / 2★★ / 3★★★)';
+      starsRow.textContent = stars ? '★'.repeat(stars) : '';
+      starsRow.onclick = function() {
+        cycleStars(zone, index);
+      };
+      wrapper.appendChild(starsRow);
+
+      // Character name
+      const nameEl = document.createElement('div');
+      nameEl.className = 'slot-name';
+      if (charId && charMap[charId]) {
+        nameEl.textContent = charMap[charId].tier_name;
+      } else {
+        nameEl.textContent = '—';
+      }
+      wrapper.appendChild(nameEl);
+
+      // Gears row (Only for Trên Sân)
+      if (zone === 'tren_san') {
+        const gearsRow = document.createElement('div');
+        gearsRow.className = 'slot-gears-row';
+        for (let g = 0; g < 3; g++) {
+          const gearCol = document.createElement('div');
+          gearCol.className = 'gear-slot-col';
+
+          const gearSlot = document.createElement('div');
+          gearSlot.className = 'gear-slot';
+          if (activeTarget.type === 'tren_san' && activeTarget.index === index && activeTarget.gearIndex === g) {
+            gearSlot.classList.add('active-target');
+          }
+
+          // Drag & Drop gear
+          gearSlot.ondragover = function(e) { e.preventDefault(); gearSlot.style.borderColor = '#f1c40f'; };
+          gearSlot.ondragleave = function() { gearSlot.style.borderColor = ''; };
+          gearSlot.ondrop = function(e) {
+            e.preventDefault();
+            gearSlot.style.borderColor = '';
+            const gearFile = e.dataTransfer.getData('text/gear-file');
+            if (gearFile) {
+              assignGearToSlot(index, g, gearFile);
+            }
+          };
+
+          gearSlot.onclick = function(e) {
+            e.stopPropagation();
+            setActiveTarget('tren_san', index, g);
+            switchPoolTab('gears');
+          };
+
+          const gearFile = gears[g];
+          if (gearFile) {
+            gearSlot.classList.add('has-gear');
+            const gImg = document.createElement('img');
+            gImg.src = 'assets/trang_bi/' + gearFile;
+            gImg.title = GEAR_NAME[gearFile] || gearFile;
+            gearSlot.appendChild(gImg);
+
+            const removeGearBtn = document.createElement('div');
+            removeGearBtn.className = 'btn-remove-gear';
+            removeGearBtn.textContent = '✕';
+            removeGearBtn.title = 'Tháo trang bị';
+            removeGearBtn.onclick = function(e) {
+              e.stopPropagation();
+              removeGearFromSlot(index, g);
+            };
+            gearSlot.appendChild(removeGearBtn);
+          }
+          gearCol.appendChild(gearSlot);
+
+          const subNum = document.createElement('span');
+          subNum.className = 'gear-sub-num';
+          subNum.textContent = '0';
+          gearCol.appendChild(subNum);
+
+          gearsRow.appendChild(gearCol);
+        }
+        wrapper.appendChild(gearsRow);
+      }
+
+      return wrapper;
+    }
+
+    function setActiveTarget(type, index, gearIndex) {
+      activeTarget = { type: type, index: index, gearIndex: gearIndex };
+      renderBoard();
+    }
+
+    function assignCharToSlot(zone, index, charId) {
+      currentTeam[zone][index] = charId;
+      if (zone === 'tren_san') {
+        if (!currentTeam.tren_stars[index]) currentTeam.tren_stars[index] = 2;
+      } else {
+        if (!currentTeam.du_stars[index]) currentTeam.du_stars[index] = 1;
+      }
+      // Auto advance to next slot
+      if (zone === 'tren_san' && index < 3) {
+        activeTarget = { type: 'tren_san', index: index + 1, gearIndex: null };
+      } else if (zone === 'tren_san' && index === 3) {
+        activeTarget = { type: 'du_bi', index: 0, gearIndex: null };
+      } else if (zone === 'du_bi' && index < 8) {
+        activeTarget = { type: 'du_bi', index: index + 1, gearIndex: null };
+      }
+      renderBoard();
+    }
+
+    function removeCharFromSlot(zone, index) {
+      currentTeam[zone][index] = null;
+      if (zone === 'tren_san') {
+        currentTeam.tren_stars[index] = null;
+        currentTeam.tren_gear[index] = [];
+      } else {
+        currentTeam.du_stars[index] = null;
+      }
+      renderBoard();
+    }
+
+    function cycleStars(zone, index) {
+      const arr = zone === 'tren_san' ? currentTeam.tren_stars : currentTeam.du_stars;
+      const current = arr[index] || 0;
+      let next = current + 1;
+      if (next > 3) next = 0;
+      arr[index] = next === 0 ? null : next;
+      renderBoard();
+    }
+
+    function assignGearToSlot(charIdx, gearSlotIdx, gearFile) {
+      if (!currentTeam.tren_gear[charIdx]) currentTeam.tren_gear[charIdx] = [];
+      currentTeam.tren_gear[charIdx][gearSlotIdx] = gearFile;
+      if (gearSlotIdx < 2) {
+        activeTarget = { type: 'tren_san', index: charIdx, gearIndex: gearSlotIdx + 1 };
+      }
+      renderBoard();
+    }
+
+    function removeGearFromSlot(charIdx, gearSlotIdx) {
+      if (currentTeam.tren_gear[charIdx]) {
+        currentTeam.tren_gear[charIdx].splice(gearSlotIdx, 1);
+      }
+      renderBoard();
+    }
+
+    function updateCounterAndSynergy() {
+      const trenCount = currentTeam.tren_san.filter(Boolean).length;
+      const duCount = currentTeam.du_bi.filter(Boolean).length;
+      const total = trenCount + duCount;
+      const text = 'Trên Sân: ' + trenCount + '/4 · Dự Bị: ' + duCount + '/9 · Tổng: ' + total + '/13';
+      document.getElementById('counterPill').textContent = text;
+      document.getElementById('boardCounterText').textContent = total + '/13';
+
+      // Compute active synergy bonds from all placed units
+      const bondCounts = {};
+      const allPlacedIds = currentTeam.tren_san.concat(currentTeam.du_bi).filter(Boolean);
+      
+      allPlacedIds.forEach(function(cid) {
+        const c = charMap[cid];
+        if (c && Array.isArray(c.links)) {
+          c.links.forEach(function(l) {
+            bondCounts[l] = (bondCounts[l] || 0) + 1;
+          });
+        }
+      });
+
+      const banner = document.getElementById('synergyBanner');
+      banner.innerHTML = '';
+
+      const bondEntries = Object.entries(bondCounts).sort(function(a, b) {
+        return b[1] - a[1];
+      });
+
+      if (bondEntries.length === 0) {
+        banner.innerHTML = '<span class="synergy-empty-hint">✨ Chọn hoặc kéo nhân vật vào bàn để kích hoạt các Liên Kết Đội Hình</span>';
+      } else {
+        bondEntries.forEach(function(entry) {
+          const bondName = entry[0];
+          const count = entry[1];
+          const item = document.createElement('div');
+          item.className = 'synergy-item';
+          item.innerHTML = '<span class="synergy-diamond"><span class="synergy-diamond-inner">' + count + '</span></span><span>' + bondName + '</span>';
+          banner.appendChild(item);
+        });
+      }
+    }
+
+    function updateTeamMeta() {
+      currentTeam.name = document.getElementById('teamName').value.trim() || 'Đội hình mới';
+      currentTeam.rank = Number(document.getElementById('teamRank').value) || 1;
+      currentTeam.code = document.getElementById('teamCodeInput').value.trim();
+      currentTeam.id = document.getElementById('teamSlotId').value;
+    }
+
+    function pasteCodeFromClipboard() {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(function(clipText) {
+          if (clipText) {
+            document.getElementById('teamCodeInput').value = clipText.trim();
+            updateTeamMeta();
+            showToast('✓ Đã dán mã đội hình!');
+          }
+        }).catch(function() {
+          document.getElementById('teamCodeInput').focus();
+          showToast('💡 Hãy ấn phím Ctrl + V để dán mã vào ô');
+        });
+      } else {
+        document.getElementById('teamCodeInput').focus();
+        showToast('💡 Hãy ấn phím Ctrl + V để dán mã vào ô');
+      }
+    }
+
+    function loadPreset(key) {
+      if (!key) return;
+      if (key === 'blank') {
+        resetBoard();
+        return;
+      }
+      const p = PRESETS[key];
+      if (!p) return;
+      currentTeam.id = p.id;
+      currentTeam.name = p.name;
+      currentTeam.rank = p.rank;
+      currentTeam.code = p.code || "";
+      currentTeam.tren_san = p.tren_san.slice();
+      currentTeam.du_bi = p.du_bi.slice();
+      currentTeam.tren_stars = p.tren_stars.slice();
+      currentTeam.du_stars = p.du_stars.slice();
+      currentTeam.tren_gear = p.tren_gear.map(function(g) { return g.slice(); });
+
+      document.getElementById('teamName').value = p.name;
+      document.getElementById('teamRank').value = p.rank;
+      document.getElementById('teamCodeInput').value = currentTeam.code;
+      document.getElementById('teamSlotId').value = p.id;
+
+      renderBoard();
+      showToast('✓ Đã tải dữ liệu ' + p.name + '!');
+    }
+
+    function resetBoard() {
+      currentTeam.tren_san = [null, null, null, null];
+      currentTeam.du_bi = [null, null, null, null, null, null, null, null, null];
+      currentTeam.tren_stars = [null, null, null, null];
+      currentTeam.du_stars = [null, null, null, null, null, null, null, null, null];
+      currentTeam.tren_gear = [[], [], [], []];
+      currentTeam.code = "";
+      document.getElementById('teamCodeInput').value = "";
+      activeTarget = { type: 'tren_san', index: 0, gearIndex: null };
+      renderBoard();
+      showToast('✓ Đã xóa trắng bàn xếp đội hình!');
+    }
+
+    // ===== POOLS (CHARACTERS & GEAR) =====
+    function switchPoolTab(tab) {
+      document.getElementById('tabBtnChars').classList.toggle('active', tab === 'chars');
+      document.getElementById('tabBtnGears').classList.toggle('active', tab === 'gears');
+      document.getElementById('poolCharsContent').style.display = tab === 'chars' ? 'flex' : 'none';
+      document.getElementById('poolGearsContent').style.display = tab === 'gears' ? 'flex' : 'none';
+    }
+
+    function setCostFilter(cost, el) {
+      currentCostFilter = cost;
+      document.querySelectorAll('#costFilters .filter-chip').forEach(function(c) { c.classList.remove('active'); });
+      el.classList.add('active');
+      filterChars();
+    }
+
+    function filterChars() {
+      const q = (document.getElementById('charSearch').value || '').toLowerCase();
+      renderCharPool(q, currentCostFilter);
+    }
+
+    function renderCharPool(q, costFilter) {
+      if (q === undefined) q = '';
+      if (costFilter === undefined) costFilter = 0;
+      const grid = document.getElementById('charGrid');
+      grid.innerHTML = '';
+
+      CHARACTERS.forEach(function(c) {
+        if (costFilter > 0 && c.cost !== costFilter) return;
+        if (q) {
+          const matchName = (c.name || '').toLowerCase().includes(q) || (c.tier_name || '').toLowerCase().includes(q);
+          const matchLinks = (c.links || []).some(function(l) { return l.toLowerCase().includes(q); });
+          if (!matchName && !matchLinks) return;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'picker-char-card';
+        card.draggable = true;
+        card.ondragstart = function(e) {
+          e.dataTransfer.setData('text/char-id', c.id);
+        };
+        card.onclick = function() {
+          assignCharToSlot(activeTarget.type, activeTarget.index, c.id);
+        };
+
+        const frame = document.createElement('div');
+        frame.className = 'card-frame has-char gs-cost-' + (c.cost || 1);
+        const img = document.createElement('img');
+        img.className = 'card-img';
+        img.src = 'avatars/' + c.avatar;
+        img.alt = c.tier_name;
+        frame.appendChild(img);
+        frame.insertAdjacentHTML('beforeend', CORNER_BADGE_SVG);
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'slot-name';
+        nameEl.textContent = c.tier_name;
+
+        card.appendChild(frame);
+        card.appendChild(nameEl);
+        grid.appendChild(card);
+      });
+    }
+
+    function filterGears() {
+      const q = (document.getElementById('gearSearch').value || '').toLowerCase();
+      renderGearPool(q);
+    }
+
+    function renderGearPool(q) {
+      if (q === undefined) q = '';
+      const grid = document.getElementById('gearGrid');
+      grid.innerHTML = '';
+
+      Object.entries(GEAR_NAME).forEach(function(entry) {
+        const file = entry[0];
+        const name = entry[1];
+        if (q && !name.toLowerCase().includes(q)) return;
+
+        const item = document.createElement('div');
+        item.className = 'picker-gear-item';
+        item.draggable = true;
+        item.title = name;
+        item.ondragstart = function(e) {
+          e.dataTransfer.setData('text/gear-file', file);
+        };
+        item.onclick = function() {
+          if (activeTarget.type === 'tren_san') {
+            const gIdx = activeTarget.gearIndex !== null ? activeTarget.gearIndex : 0;
+            assignGearToSlot(activeTarget.index, gIdx, file);
+          } else {
+            showToast('⚠️ Vui lòng nhấp chọn 1 ô trang bị dưới nhân vật Trên Sân trước!');
+          }
+        };
+
+        const img = document.createElement('img');
+        img.src = 'assets/trang_bi/' + file;
+        img.alt = name;
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+
+        item.appendChild(img);
+        item.appendChild(nameSpan);
+        grid.appendChild(item);
+      });
+    }
+
+    // ===== EXPORT & IMPORT =====
+    function generateCleanTeamJson() {
+      updateTeamMeta();
+      const slotNum = currentTeam.id.replace('team_', '') || '1';
+      
+      const trenSanClean = currentTeam.tren_san;
+      const duBiClean = currentTeam.du_bi;
+      const trenStarsClean = currentTeam.tren_stars;
+      const duStarsClean = currentTeam.du_stars;
+      
+      const trenGearClean = currentTeam.tren_gear.map(function(g) { return (g || []).filter(Boolean); });
+      const duGearClean = [[], [], [], [], [], [], [], [], []];
+
+      const teamObj = {
+        id: currentTeam.id,
+        name: currentTeam.name,
+        rank: currentTeam.rank,
+        code: currentTeam.code || "",
+        counter: slotNum + '/20',
+        tren_san: trenSanClean,
+        du_bi: duBiClean,
+        tren_stars: trenStarsClean,
+        du_stars: duStarsClean,
+        equip_basic: [null, null, null, null, null],
+        equip_advanced: [null, null, null],
+        tren_gear: trenGearClean,
+        du_gear: duGearClean
+      };
+
+      return JSON.stringify(teamObj, null, 2);
+    }
+
+    function openExportModal() {
+      const json = generateCleanTeamJson();
+      document.getElementById('exportTextarea').value = json + ',';
+      document.getElementById('exportModal').classList.add('open');
+    }
+
+    function closeExportModal() {
+      document.getElementById('exportModal').classList.remove('open');
+    }
+
+    function copyExportText() {
+      const txt = document.getElementById('exportTextarea');
+      txt.select();
+      navigator.clipboard.writeText(txt.value).then(function() {
+        showToast('✓ Đã sao chép mã JSON vào Clipboard!');
+      });
+    }
+
+    function copyCurrentJson() {
+      const json = generateCleanTeamJson() + ',';
+      navigator.clipboard.writeText(json).then(function() {
+        showToast('✓ Đã sao chép nhanh JSON đội hình!');
+      });
+    }
+
+    function openImportModal() {
+      document.getElementById('importTextarea').value = '';
+      document.getElementById('importModal').classList.add('open');
+    }
+
+    function closeImportModal() {
+      document.getElementById('importModal').classList.remove('open');
+    }
+
+    function doImportJson() {
+      const raw = document.getElementById('importTextarea').value.trim();
+      if (!raw) return;
+      try {
+        let cleaned = raw;
+        if (cleaned.endsWith(',')) cleaned = cleaned.slice(0, -1);
+        const obj = JSON.parse(cleaned);
+
+        if (obj.name) {
+          currentTeam.name = obj.name;
+          document.getElementById('teamName').value = obj.name;
+        }
+        if (obj.rank !== undefined) {
+          currentTeam.rank = Number(obj.rank);
+          document.getElementById('teamRank').value = obj.rank;
+        }
+        if (obj.code !== undefined || obj.team_code !== undefined) {
+          currentTeam.code = obj.code || obj.team_code || "";
+          document.getElementById('teamCodeInput').value = currentTeam.code;
+        } else {
+          currentTeam.code = "";
+          document.getElementById('teamCodeInput').value = "";
+        }
+        if (obj.id) {
+          currentTeam.id = obj.id;
+          document.getElementById('teamSlotId').value = obj.id;
+        }
+
+        if (Array.isArray(obj.tren_san)) {
+          currentTeam.tren_san = [obj.tren_san[0]||null, obj.tren_san[1]||null, obj.tren_san[2]||null, obj.tren_san[3]||null];
+        }
+        if (Array.isArray(obj.du_bi)) {
+          currentTeam.du_bi = [];
+          for (let i = 0; i < 9; i++) currentTeam.du_bi.push(obj.du_bi[i] || null);
+        }
+        if (Array.isArray(obj.tren_stars)) {
+          currentTeam.tren_stars = [obj.tren_stars[0]||null, obj.tren_stars[1]||null, obj.tren_stars[2]||null, obj.tren_stars[3]||null];
+        } else {
+          currentTeam.tren_stars = [null, null, null, null];
+        }
+        if (Array.isArray(obj.du_stars)) {
+          currentTeam.du_stars = [];
+          for (let i = 0; i < 9; i++) currentTeam.du_stars.push(obj.du_stars[i] || null);
+        } else {
+          currentTeam.du_stars = [null, null, null, null, null, null, null, null, null];
+        }
+
+        if (Array.isArray(obj.tren_gear)) {
+          currentTeam.tren_gear = [obj.tren_gear[0]||[], obj.tren_gear[1]||[], obj.tren_gear[2]||[], obj.tren_gear[3]||[]];
+        } else {
+          currentTeam.tren_gear = [[], [], [], []];
+        }
+
+        closeImportModal();
+        renderBoard();
+        showToast('✓ Tải đội hình thành công!');
+      } catch (err) {
+        alert('Lỗi định dạng JSON: ' + err.message);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2200);
+    }
+  </script>
+</body>
+</html>
