@@ -2314,7 +2314,84 @@
       padding: 4px 14px 12px 14px;
       word-break: break-word;
       margin: 0;
-    }</style>
+    }
+    /* ===== LỘ TRÌNH 5 VÀNG 3 SAO (kiểu bảng thành tựu) ===== */
+    .btn-lotrinh {
+      background: linear-gradient(180deg, #d9a441 0%, #9c6b1e 100%);
+      color: #fff8e1;
+      border: 2px solid #3b2a0b;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,.35), inset 0 -3px 0 rgba(0,0,0,.35);
+      font-family: 'Courier New', monospace;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-shadow: 1px 1px 0 rgba(0,0,0,.6);
+      align-self: center;
+    }
+    .btn-lotrinh:hover { filter: brightness(1.15); }
+    .btn-lotrinh.active { outline: 2px solid #fff; outline-offset: 2px; }
+    .adv-wrap { max-width: 1400px; margin: 18px auto; padding: 0 16px; }
+    .adv-title { font-family: 'Courier New', monospace; color: #f1c40f; font-size: 20px; font-weight: 800; margin: 0 0 4px; }
+    .adv-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 12px; }
+    .adv-board {
+      position: relative;
+      overflow: auto;
+      background: #2c2c2e;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%),
+        linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+      border: 4px solid #121212;
+      box-shadow: inset 0 0 0 2px #4a4a4d;
+      min-height: 380px;
+    }
+    .adv-canvas { position: relative; }
+    .adv-canvas svg { position: absolute; left: 0; top: 0; pointer-events: none; }
+    .adv-node {
+      position: absolute;
+      width: 64px; height: 64px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      background: #8a5a14;
+      border: 4px solid #e0b252;
+      box-shadow: inset 0 0 0 2px #3b2a0b, 0 3px 0 rgba(0,0,0,.5);
+      user-select: none;
+      transition: transform .12s, filter .12s;
+    }
+    .adv-node:hover, .adv-node.sel { transform: translateY(-2px); filter: brightness(1.2); }
+    .adv-node.sel { outline: 3px solid #fff; outline-offset: 3px; }
+    .adv-node.root { background: #555; border-color: #aaa; }
+    .adv-node.branch { background: #4b5563; border-color: #cbd5e1; border-radius: 4px; }
+    .adv-node.tip {
+      background: #5b2a86; border-color: #d6a8ff;
+      clip-path: polygon(14% 0, 86% 0, 100% 14%, 100% 86%, 86% 100%, 14% 100%, 0 86%, 0 14%);
+      box-shadow: none;
+    }
+    .adv-label {
+      position: absolute; width: 110px; text-align: center;
+      font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700;
+      color: #e5e7eb; text-shadow: 1px 1px 0 #000; pointer-events: none; line-height: 1.25;
+    }
+    .adv-tooltip {
+      position: fixed; z-index: 9999; display: none; max-width: 340px;
+      background: #100010; border: 2px solid #2d0a63;
+      box-shadow: inset 0 0 0 1px #5b2a86;
+      padding: 8px 10px; pointer-events: none;
+      font-family: 'Courier New', monospace; color: #e5e7eb; font-size: 12.5px; line-height: 1.45;
+    }
+    .adv-tooltip b { display: block; color: #f1c40f; font-size: 13.5px; margin-bottom: 4px; }
+    .adv-detail {
+      margin-top: 12px; padding: 12px 16px;
+      background: #100010; border: 2px solid #2d0a63; box-shadow: inset 0 0 0 1px #5b2a86;
+      font-family: 'Courier New', monospace; color: #e5e7eb; line-height: 1.6; font-size: 14px;
+    }
+    .adv-detail b { color: #f1c40f; font-size: 15px; display: block; margin-bottom: 4px; }
+  </style>
 </head>
 <body>
 
@@ -2326,6 +2403,7 @@
         <h1>Honkai: Star Rail — Bảng Xếp Hạng & Sổ Tay Liên Kết</h1>
         <div class="sub-title">Bảng tierlist sẽ được cập nhật theo phiên bản. Phiên bản hiện tại: 4.7</div>
       </div>
+      <button class="btn-lotrinh" onclick="switchPageTab('lo-trinh')" title="Mở Lộ Trình 5 vàng 3 sao">🏆 Lộ Trình 5 vàng 3 sao</button>
     </div>
 
     <!-- Controls -->
@@ -2379,6 +2457,78 @@
     <button class="page-tab-btn" onclick="switchPageTab('chien-luoc')">📈 Tierlist Chiến Lược Đầu Tư</button>
     <button class="page-tab-btn page-tab-btn-team" onclick="toggleTeamSidebar()" title="Mở danh sách xếp hạng 20 đội hình">🏆 Xếp Hạng Đội Hình</button>
   </nav>
+
+  <!-- ===== SECTION: LO TRINH 5 VANG 3 SAO ===== -->
+  <div class="page-section" id="section-lo-trinh">
+    <div class="adv-wrap">
+      <h2 class="adv-title">🏆 Lộ Trình 5 vàng 3 sao</h2>
+      <div class="adv-sub">Rê chuột hoặc bấm vào từng ô để xem chi tiết. Đi từ trái sang phải.</div>
+      <div class="adv-board"><div class="adv-canvas" id="advCanvas"></div></div>
+      <div class="adv-detail" id="advDetail"><b>Lộ Trình 5 vàng 3 sao</b>Bấm vào một ô để xem nội dung từng bước.</div>
+    </div>
+  </div>
+  <div class="adv-tooltip" id="advTooltip"></div>
+  <script>
+  (function(){
+    const N = [
+      {id:'root', col:0,row:1, ic:'📜', kind:'root', label:'Bắt đầu', t:'Lộ Trình 5 vàng 3 sao', d:'Các bước đi từ đầu trận để đạt 5 vàng 3 sao. Đi lần lượt từ trái sang phải.'},
+      {id:'b1', p:'root', col:1,row:1, ic:'🚫', label:'Bước 1', t:'Bước 1', d:'Né các debuff khó chịu và ảnh hưởng tới kinh tế.'},
+      {id:'b2', p:'b1', col:2,row:1, ic:'🌐', label:'Bước 2', t:'Bước 2', d:'Chọn các môi trường đầu tư (lấy ở bảng Tiền Tài Danh Vọng).'},
+      {id:'b3', p:'b2', col:3,row:1, ic:'🛡️', label:'Bước 3', t:'Bước 3', d:'Sử dụng các team Meta siêu rẻ để def như DOT, hoặc vui vẻ nếu có sói.'},
+      {id:'b4', p:'b3', col:4,row:1, ic:'📈', label:'Bước 4', t:'Bước 4', d:'Chọn các chiến lược đầu tư (lấy ở bảng Tiền Tài Danh Vọng).'},
+      {id:'b5', p:'b4', col:5,row:1, ic:'💰', label:'Bước 5', t:'Bước 5 — Giữ mốc tiền', d:'Ưu tiên giữ các mốc tiền 20 ở 1.3-1.4. Từ 30-50 tiền tới 1.6.'},
+      {id:'b5a', p:'b5', col:6,row:0, ic:'🔗', kind:'branch', label:'Ngắt chuỗi win', t:'Bước 5 — Ngắt chuỗi win', d:'Có thể bị ngắt chuỗi win để bảo toàn lợi tức ở vị diện 1.'},
+      {id:'b5b', p:'b5', col:6,row:2, ic:'💎', kind:'branch', label:'Trên 80 tiền', t:'Bước 5 — Khu thưởng', d:'Khi qua khu thưởng trên 80 tiền thì coi như 1 trận đủ giàu.'},
+      {id:'b6', p:'b5', col:6,row:1, ic:'📋', label:'Bước 6', t:'Bước 6', d:'Soạn sẵn team, chơi theo form cố định, hạn chế xoay bài nhất có thể ngay từ vị diện 1.'},
+      {id:'b7', p:'b6', col:7,row:1, ic:'⬆️', label:'Bước 7', t:'Bước 7', d:'Liên tục up cấp, cải thiện chất lượng team ở mức 2 và 3 sao nếu hên (hay sói có chip sao chép). Không tiêu quá mất lợi tức.'},
+      {id:'b8', p:'b7', col:8,row:1, ic:'⚔️', label:'Bước 8', t:'Bước 8', d:'Khi ở vị diện 3 còn khiên bảo hiểm, ước lượng mức sát thương có thể gây ra và đánh gặp gỡ ưu tiên cho tiền hoặc exp.'},
+      {id:'b9', p:'b8', col:9,row:1, ic:'🎰', label:'Bước 9', t:'Bước 9 — Roll', d:'CHỈ khi có chuyên viên thu mua mới eco chết tiền ở level 8 để đảm bảo đủ 200 tiền, không thì buộc phải roll ở ít nhất lv9.'},
+      {id:'b9a', p:'b9', col:10,row:0, ic:'🟢', kind:'branch', label:'Điều kiện lv9', t:'Điều kiện roll lv9', d:'Điều kiện tối thiểu để có thể roll ở lv9 là đã có sẵn ít nhất 1 con jade 5v2s. Trong quá trình roll liên tục bắt các nhân vật 5 tiền 2 sao.'},
+      {id:'tip1', p:'b9', col:10,row:2, ic:'✨', kind:'tip', label:'Mẹo 1', t:'TIPS & TRICK — Roll hào quang', d:'Khi đến lúc roll hãy roll hào quang trước và tiêu từ 5-20 vàng (tùy mức kinh tế) để kiếm 1 hào quang như Sao Chép Chính Mình - Quá Tải hay Bậc Thầy Xã Giao sẽ là lựa chọn tuyệt vời nhất.'},
+      {id:'tip2', p:'tip1', col:11,row:2, ic:'🤝', kind:'tip', label:'Mẹo 2', t:'TIPS & TRICK — Có chuyên viên', d:'Khi chơi nếu có chuyên viên, ưu tiên lấy hào quang Bậc Thầy Xã Giao sẽ là best in slot.'},
+      {id:'tip3', p:'tip2', col:12,row:2, ic:'🔜', kind:'tip', label:'Sắp tới', t:'Cập nhật', d:'Sẽ có thêm cập nhật cho tương lai.'}
+    ];
+    const W=64, GX=130, GY=120, PAD=40;
+    const cv=document.getElementById('advCanvas'), tip=document.getElementById('advTooltip'), det=document.getElementById('advDetail');
+    const maxC=Math.max(...N.map(n=>n.col)), maxR=Math.max(...N.map(n=>n.row));
+    const cw=PAD*2+maxC*GX+W, ch=PAD*2+maxR*GY+W+30;
+    cv.style.width=cw+'px'; cv.style.height=ch+'px';
+    const pos=n=>({x:PAD+n.col*GX, y:PAD+n.row*GY});
+    const byId={}; N.forEach(n=>byId[n.id]=n);
+    let paths='';
+    N.forEach(n=>{
+      if(!n.p) return;
+      const a=pos(byId[n.p]), b=pos(n);
+      const x1=a.x+W, y1=a.y+W/2, x2=b.x, y2=b.y+W/2, xm=(x1+x2)/2;
+      paths+=`M${x1} ${y1} H${xm} V${y2} H${x2} `;
+    });
+    cv.innerHTML=`<svg width="${cw}" height="${ch}"><path d="${paths}" fill="none" stroke="#000" stroke-width="8" stroke-linecap="square"/><path d="${paths}" fill="none" stroke="#e5e7eb" stroke-width="4" stroke-linecap="square"/></svg>`;
+    function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+    N.forEach(n=>{
+      const {x,y}=pos(n);
+      const el=document.createElement('div');
+      el.className='adv-node'+(n.kind?' '+n.kind:'');
+      el.style.left=x+'px'; el.style.top=y+'px'; el.textContent=n.ic;
+      const lb=document.createElement('div');
+      lb.className='adv-label'; lb.style.left=(x+W/2-55)+'px'; lb.style.top=(y+W+8)+'px'; lb.textContent=n.label;
+      el.addEventListener('mouseenter',e=>{tip.innerHTML='<b>'+esc(n.t)+'</b>'+esc(n.d);tip.style.display='block';mv(e);});
+      el.addEventListener('mousemove',mv);
+      el.addEventListener('mouseleave',()=>{tip.style.display='none';});
+      el.addEventListener('click',()=>{
+        cv.querySelectorAll('.adv-node.sel').forEach(o=>o.classList.remove('sel'));
+        el.classList.add('sel');
+        det.innerHTML='<b>'+esc(n.t)+'</b>'+esc(n.d);
+      });
+      cv.appendChild(el); cv.appendChild(lb);
+    });
+    function mv(e){
+      const w=tip.offsetWidth||300;
+      let x=e.clientX+16, y=e.clientY+16;
+      if(x+w>window.innerWidth-8) x=e.clientX-w-16;
+      tip.style.left=x+'px'; tip.style.top=y+'px';
+    }
+  })();
+  </script>
 
   <!-- ===== SECTION: NHAN VAT ===== -->
   <div class="page-section active" id="section-nhan-vat">
@@ -12959,6 +13109,7 @@
       if (section) section.classList.add('active');
       const btn = [...document.querySelectorAll('.page-tab-btn')].find(b => b.getAttribute('onclick').includes("'" + tab + "'"));
       if (btn) btn.classList.add('active');
+      document.querySelectorAll('.btn-lotrinh').forEach(b => b.classList.toggle('active', tab === 'lo-trinh'));
     }
     function switchCLTab(e, tab) {
       document.querySelectorAll('.cl-subtab-btn').forEach(b => b.classList.remove('active'));
