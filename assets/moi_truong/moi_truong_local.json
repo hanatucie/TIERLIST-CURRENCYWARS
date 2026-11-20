@@ -1,0 +1,989 @@
+[
+  {
+    "order": 1,
+    "name": "Mùi Thuốc Súng",
+    "desc": "Khi bắt đầu trận, nhận 2 Rương Vũ Trang Cơ Bản.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/38db85330ae3bc23ecf58ad9ff958e5c.png",
+    "icon": "moi_truong/001_mui_thuoc_sung.png"
+  },
+  {
+    "order": 2,
+    "name": "Cấp Đặc Quyền",
+    "desc": "Khi bắt đầu Vị Diện 2, nhận được 1 Rương Vũ Trang Đặc Quyền.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/7298619d9a30f1824384a1c36c47c0a3.png",
+    "icon": "moi_truong/002_cap_dac_quyen.png"
+  },
+  {
+    "order": 3,
+    "name": "Phát Hành Thêm Tiền",
+    "desc": "Khi bắt đầu Vị Diện 1/2/3, nhận 1 Quặng Tinh Thể bằng 6/8/12 Xu Vàng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/cf6b251a5c2ca0506e42eaa05140d9c0.png",
+    "icon": "moi_truong/003_phat_hanh_them_tien.png"
+  },
+  {
+    "order": 4,
+    "name": "Đấu Trường Giếng Sâu",
+    "desc": "Trận này lần đầu đạt 5 liên thắng, sẽ nhận được Ngọc Tài Lộc.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ff6c99d18c20c3642f30585f3d6bfdea.png",
+    "icon": "moi_truong/004_dau_truong_gieng_sau.png"
+  },
+  {
+    "order": 5,
+    "name": "Kinh Tế Quá Nhiệt",
+    "desc": "Tất cả điểm mốc phần thưởng của trận này sẽ được thay thế bằng chủ đề Heo Đất Không Gian, Heo Đất Không Gian sẽ rơi nhiều chiến lợi phẩm hơn.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 6,
+    "name": "Chợ Second-Hand",
+    "desc": "Sau khi làm mới Cửa Hàng 20 lần, nhận 30 Xu Vàng và Máy Chiếu Nhân Viên.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 7,
+    "name": "Bảo Hiểm Tai Nạn Con Người",
+    "desc": "Trước tất cả Điểm Mốc Thủ Lĩnh đều thêm 1 Giai Đoạn Viện Trợ thêm.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 8,
+    "name": "Kinh Phí Dư Thừa",
+    "desc": "Trong Giai Đoạn Viện Trợ, nhân vật sẽ mang theo hai trang bị.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 9,
+    "name": "Chuyển Giao Nhân Tài",
+    "desc": "Bắt đầu trận sẽ có 1 nhân vật 4 COST ngẫu nhiên.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 10,
+    "name": "Thời Đại Cầu Vồng",
+    "desc": "Chiến Lược Đầu Tư trong trận này đều là phẩm chất Sắc Màu.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 11,
+    "name": "Thời Đại Hoàng Kim",
+    "desc": "Chiến Lược Đầu Tư trong trận này đều là phẩm chất Vàng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 12,
+    "name": "Thời Đại Bạc",
+    "desc": "Tất cả Chiến Lược Đầu Tư trong trận này đều là phẩm chất Bạc, vì vậy độ khó của kẻ địch sẽ không tăng do chọn Chiến Lược Đầu Tư phẩm chất cao.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 13,
+    "name": "Đại Dương Xanh",
+    "desc": "Vào 1 Môi Trường Đầu Tư ngẫu nhiên, nhận thêm 6 Xu Vàng khi vào trận.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 14,
+    "name": "Luân Phiên",
+    "desc": "Khi bắt đầu Giai Đoạn Chuẩn Bị, khiến xác suất làm mới của một COST ngẫu nhiên tăng gấp đôi, mỗi Giai Đoạn Chuẩn Bị sẽ làm mới ngẫu nhiên.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 15,
+    "name": "Peppy 3 Sao",
+    "desc": "Nhận được một Peppy mang 3 Huy Hiệu ngẫu nhiên.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 16,
+    "name": "Peppy Bất Cẩn",
+    "desc": "Nhận được một Peppy mang 3 Huy Hiệu ngẫu nhiên, Peppy bất cẩn đôi khi sẽ làm rơi Huy Hiệu vào trong ô vật phẩm của bạn.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 17,
+    "name": "Biên Giới Chiến Tranh",
+    "desc": "Tất cả các Điểm Mốc Chiến Đấu ở Vị Diện 3 đều được thay bằng Điểm Mốc Gặp Gỡ.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 18,
+    "name": "Hợp Đồng Cho Thuê Lao Động",
+    "desc": "Nhận Huy Hiệu ngẫu nhiên, mỗi lần vào Điểm Mốc Thủ Lĩnh sẽ nhận được nhân vật ngẫu nhiên có Liên Kết tương ứng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 19,
+    "name": "Kinh Tế Quá Nhiệt Nghiêm Trọng",
+    "desc": "Tất cả điểm mốc phần thưởng của trận này sẽ được thay thế bằng chủ đề Heo Đất Không Gian Siêu Cấp! Heo Đất Không Gian Siêu Cấp sẽ rơi rất nhiều chiến lợi phẩm!! Nhưng chúng chạy siêu nhanh!!!",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 20,
+    "name": "Lợi Ích Lâu Dài",
+    "desc": "Sau khi tiêu Xu Vàng 30 lần để làm mới, sẽ nhận 20 Xu Vàng, sau đó trong trận này, chỉ cần 1 Xu Vàng là có thể làm mới.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 21,
+    "name": "Nhân Tài Trượt Dốc",
+    "desc": "Cửa Hàng có xác suất xuất hiện nhân vật 2 sao.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 22,
+    "name": "Quyết Sách Liên Tịch",
+    "desc": "Thực hiện thêm 1 lần chọn 1 trong 3 Chiến Lược Đầu Tư ở điểm mốc 2-6.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 23,
+    "name": "Giải Độc Đắc",
+    "desc": "Chiến Lược Đầu Tư thứ nhất là phẩm chất Sắc Màu.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 24,
+    "name": "Cơ Hội Cuối Cùng",
+    "desc": "Chiến Lược Đầu Tư thứ ba là phẩm chất Sắc Màu.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 25,
+    "name": "Quý Tộc Ngọc Đỏ",
+    "desc": "Khi bắt đầu trận sẽ sở hữu \"Ngọc Đỏ\" và một \"Rương Vũ Trang Cơ Bản\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 26,
+    "name": "Quý Tộc Ngọc Lam",
+    "desc": "Khi bắt đầu trận sẽ sở hữu \"Ngọc Lam\" và một \"Rương Vũ Trang Cơ Bản\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 27,
+    "name": "Anh Hùng Ra Mắt",
+    "desc": "Nhận được 1 nhân vật 5 COST 2 sao, cần 19 điểm mốc mới có thể đưa vào trận. Sau khi toàn thắng trong trận đấu, điểm mốc ra trận sẽ tiến thêm 1.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 28,
+    "name": "Món Quà Vận Mệnh",
+    "desc": "Lập tức nhận một \"Hộp Bất Ngờ\", hộp quà sẽ mở sau khi đếm ngược 12 điểm mốc, khi toàn thắng trong trận đấu, giảm thêm 1 điểm đếm ngược.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 29,
+    "name": "Bạc - Vàng - Màu",
+    "desc": "Trong ván này, khi chọn Chiến Lược Đầu Tư tại điểm mốc cố định, các lựa chọn trái, giữa, phải sẽ có phẩm chất Bạc, Vàng, Màu, và số lần làm mới Chiến Lược Đầu Tư +2.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 30,
+    "name": "Lực Chiến Tăng",
+    "desc": "Nhận 1 nhân vật gây sát thương 1 COST 2 sao, khi vào điểm mốc mới, nhân vật này sẽ nhận được tăng thuộc tính ngẫu nhiên vĩnh viễn.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 31,
+    "name": "Lực Chiến Tăng Vọt",
+    "desc": "Nhận được 1 nhân vật 2 COST 2 sao ngẫu nhiên, khi vào điểm mốc mới, nhân vật này sẽ nhận được tăng thuộc tính ngẫu nhiên vĩnh viễn.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 32,
+    "name": "Kinh Nghiệm Thành Công",
+    "desc": "Sau khi đạt cấp 8, khi vào 3 điểm mốc tiếp theo, nhận 12 EXP.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 33,
+    "name": "Dự Trữ Nhân Tài",
+    "desc": "Tiếp tế đầu trận thay bằng 3 nhân vật 3 COST ngẫu nhiên. Khi nhân vật 3 COST tăng đến 2/3 sao, nhận 11%/33% Buff Tốc Độ, 22%/66% Buff Sát Thương.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 34,
+    "name": "Thuật Toán Tiến Hóa",
+    "desc": "Khi vào điểm mốc mới, tất cả nhân vật trong trận nhận 4% Sức Mạnh Trên Sân-Dự Bị và 2% Giảm Sát Thương, hiệu ứng này có thể cộng dồn.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 35,
+    "name": "Phá Hoại Hậu Phương Địch",
+    "desc": "Khi bắt đầu trận, khiến một Phụ Tố của kẻ địch đã tạo mất hiệu lực.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 36,
+    "name": "Bậc Thầy Chiến Lược",
+    "desc": "Khi nhận Chiến Lược Đầu Tư, nhận Xu Vàng bằng (2 × số Chiến Lược Đầu Tư đã sở hữu). Tại điểm mốc 3-5 nhận thêm 1 Chiến Lược Đầu Tư.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 37,
+    "name": "Xuất Hiện Sớm",
+    "desc": "Phần chọn Hào Quang Nhân Vật Chính được đẩy sớm lên điểm mốc 1-6 và 2-4.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 38,
+    "name": "Làm Mới Nào",
+    "desc": "Khi bắt đầu Vị Diện 1/2/3, lần lượt nhận 2/3/4 lần làm mới Cửa Hàng miễn phí.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 39,
+    "name": "Mua Sắm Hào Quang",
+    "desc": "Giá làm mới Hào Quang Nhân Vật Chính ván này cố định là 1 Xu Vàng, đồng thời nhận 6 lần làm mới Hào Quang Nhân Vật Chính miễn phí.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 40,
+    "name": "Thanh Mai Ngưu Mã",
+    "desc": "Nhận 2 \"Máy Chiếu Thực Tập Sinh\". Khi lần đầu sở hữu cùng lúc 2 nhân vật 1 COST 3 sao, nhận 1 \"Máy Chiếu Hoàn Hảo\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 41,
+    "name": "Cổ Phiếu Khái Niệm Đánh Lan",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đánh Lan\", xác suất làm mới của nhân vật \"Đánh Lan\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 42,
+    "name": "Lời Mời Hạm Đội Xianzhou",
+    "desc": "Nhận 1 \"Huy Hiệu Hạm Đội Xianzhou\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 43,
+    "name": "Lời Mời Khu Vườn Kỳ Thú",
+    "desc": "Nhận 1 \"Huy Hiệu Khu Vườn Kỳ Thú\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 44,
+    "name": "Lời Mời Trò Chơi Ảo Nguyệt",
+    "desc": "Nhận 1 \"Huy Hiệu Trò Chơi Ảo Nguyệt\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 45,
+    "name": "Lời Mời Nhà Du Hành",
+    "desc": "Nhận 1 Huy Hiệu Nhà Du Hành.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 46,
+    "name": "Lời Mời Đường Ray Bạc Khai Phá",
+    "desc": "Nhận 1 \"Huy Hiệu Đường Ray Bạc Khai Phá\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 47,
+    "name": "Lời Mời Thợ Săn Stellaron",
+    "desc": "Nhận 1 \"Huy Hiệu Thợ Săn Stellaron\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 48,
+    "name": "Lời Mời Người Khổng Lồ Tí Hon",
+    "desc": "Nhận 1 \"Huy Hiệu Người Khổng Lồ Tí Hon\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 49,
+    "name": "Lời Mời Cõi Mộng Đan Xen",
+    "desc": "Nhận 1 \"Huy Hiệu Cõi Mộng Đan Xen\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 50,
+    "name": "Lời Mời Nhà Hàng Hoàng Kim",
+    "desc": "Nhận 1 \"Huy Hiệu Huy Hiệu Nhà Hàng Hoàng Kim\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 51,
+    "name": "Lời Mời Đòn Đánh Theo Sau",
+    "desc": "Nhận 1 \"Huy Hiệu Đòn Đánh Theo Sau\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 52,
+    "name": "Lời Mời Sát Thương Duy Trì",
+    "desc": "Nhận 1 \"Huy Hiệu Sát Thương Duy Trì\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 53,
+    "name": "Lời Mời Đánh Lan",
+    "desc": "Nhận 1 \"Huy Hiệu Đánh Lan\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 54,
+    "name": "Lời Mời Liên Kích",
+    "desc": "Nhận 1 \"Huy Hiệu Liên Kích\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 55,
+    "name": "Lời Mời Phá Vỡ",
+    "desc": "Nhận 1 \"Huy Hiệu Phá Vỡ\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 56,
+    "name": "Lời Mời Triệu Hồi",
+    "desc": "Nhận 1 \"Huy Hiệu Triệu Hồi\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 57,
+    "name": "Lời Mời Vui Vẻ",
+    "desc": "Nhận 1 \"Huy Hiệu Vui Vẻ\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 58,
+    "name": "Lời Mời Phản Kích",
+    "desc": "Nhận 1 \"Huy Hiệu Phản Kích\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 59,
+    "name": "Lời Mời Năng Lượng",
+    "desc": "Nhận 1 \"Huy Hiệu Năng Lượng\".",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 60,
+    "name": "Cổ Phiếu Khái Niệm Hạm Đội Xianzhou",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Hạm Đội Xianzhou\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Hạm Đội Xianzhou\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 61,
+    "name": "Cổ Phiếu Khái Niệm Khu Vườn Kỳ Thú",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Khu Vườn Kỳ Thú\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Khu Vườn Kỳ Thú\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 62,
+    "name": "Cổ Phiếu Khái Niệm Trò Chơi Ảo Nguyệt",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Trò Chơi Ảo Nguyệt\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Trò Chơi Ảo Nguyệt\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 63,
+    "name": "Cổ Phiếu Khái Niệm Đường Ray Bạc Khai Phá",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đường Ray Bạc Khai Phá\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Đường Ray Bạc Khai Phá\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 64,
+    "name": "Cổ Phiếu Khái Niệm Thương Hội Astropolis",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Thương Hội Astropolis\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Thương Hội Astropolis\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 65,
+    "name": "Cổ Phiếu Khái Niệm Đòn Đánh Theo Sau",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đòn Đánh Theo Sau\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Đòn Đánh Theo Sau\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 66,
+    "name": "Cổ Phiếu Khái Niệm Sát Thương Duy Trì",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Sát Thương Duy Trì\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Sát Thương Duy Trì\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 67,
+    "name": "Cổ Phiếu Khái Niệm Liên Kích",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Liên Kích\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Liên Kích\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 68,
+    "name": "Cổ Phiếu Khái Niệm Phá Vỡ",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Phá Vỡ\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Phá Vỡ\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 69,
+    "name": "Cổ Phiếu Khái Niệm Triệu Hồi",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Triệu Hồi\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Triệu Hồi\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 70,
+    "name": "Cổ Phiếu Khái Niệm Vui Vẻ",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Vui Vẻ\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Vui Vẻ\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 71,
+    "name": "Cổ Phiếu Khái Niệm Phản Kích",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Phản Kích\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Phản Kích\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 72,
+    "name": "Cổ Phiếu Khái Niệm Năng Lượng",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Năng Lượng\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Năng Lượng\" tăng.",
+    "iconUrl": "",
+    "icon": ""
+  },
+  {
+    "order": 73,
+    "name": "Kinh Tế Quá Nhiệt",
+    "desc": "Tất cả điểm mốc phần thưởng của trận này sẽ được thay thế bằng chủ đề Heo Đất Không Gian, Heo Đất Không Gian sẽ rơi nhiều chiến lợi phẩm hơn.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/8a09c07f3500345e4ef6deaa8432887d.png",
+    "icon": "moi_truong/073_kinh_te_qua_nhiet.png"
+  },
+  {
+    "order": 74,
+    "name": "Chợ Second-Hand",
+    "desc": "Sau khi làm mới Cửa Hàng 20 lần, nhận 30 Xu Vàng và Máy Chiếu Nhân Viên.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/6fdd959af12d904738e9ebc8821c0311.png",
+    "icon": "moi_truong/074_cho_second_hand.png"
+  },
+  {
+    "order": 75,
+    "name": "Bảo Hiểm Tai Nạn Con Người",
+    "desc": "Trước tất cả Điểm Mốc Thủ Lĩnh đều thêm 1 Giai Đoạn Viện Trợ thêm.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/e21e7a941d3d9885f4a1a500b9bac99f.png",
+    "icon": "moi_truong/075_bao_hiem_tai_nan_con_nguoi.png"
+  },
+  {
+    "order": 76,
+    "name": "Kinh Phí Dư Thừa",
+    "desc": "Trong Giai Đoạn Viện Trợ, nhân vật sẽ mang theo hai trang bị.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ac8d6971a9456db5a4e5b3c175a68896.png",
+    "icon": "moi_truong/076_kinh_phi_du_thua.png"
+  },
+  {
+    "order": 77,
+    "name": "Chuyển Giao Nhân Tài",
+    "desc": "Bắt đầu trận sẽ có 1 nhân vật 4 COST ngẫu nhiên.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/d9ac24621d148407ee67d2b305c86fb1.png",
+    "icon": "moi_truong/077_chuyen_giao_nhan_tai.png"
+  },
+  {
+    "order": 78,
+    "name": "Thời Đại Cầu Vồng",
+    "desc": "Chiến Lược Đầu Tư trong trận này đều là phẩm chất Sắc Màu.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/3c97b857e61ab537b1b48be3fe7460ad.png",
+    "icon": "moi_truong/078_thoi_dai_cau_vong.png"
+  },
+  {
+    "order": 79,
+    "name": "Thời Đại Hoàng Kim",
+    "desc": "Chiến Lược Đầu Tư trong trận này đều là phẩm chất Vàng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/e703913c14144469bbf9ce23fc485fe5.png",
+    "icon": "moi_truong/079_thoi_dai_hoang_kim.png"
+  },
+  {
+    "order": 80,
+    "name": "Thời Đại Bạc",
+    "desc": "Tất cả Chiến Lược Đầu Tư trong trận này đều là phẩm chất Bạc, vì vậy độ khó của kẻ địch sẽ không tăng do chọn Chiến Lược Đầu Tư phẩm chất cao.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/187ec71651c417106ef5eb2553f091b9.png",
+    "icon": "moi_truong/080_thoi_dai_bac.png"
+  },
+  {
+    "order": 81,
+    "name": "Đại Dương Xanh",
+    "desc": "Vào 1 Môi Trường Đầu Tư ngẫu nhiên, nhận thêm 6 Xu Vàng khi vào trận.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/f7138c8d2742ae2a38f9d0bc2a076595.png",
+    "icon": "moi_truong/081_dai_duong_xanh.png"
+  },
+  {
+    "order": 82,
+    "name": "Luân Phiên",
+    "desc": "Khi bắt đầu Giai Đoạn Chuẩn Bị, khiến xác suất làm mới của một COST ngẫu nhiên tăng gấp đôi, mỗi Giai Đoạn Chuẩn Bị sẽ làm mới ngẫu nhiên.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/4ecde602e78188119e7ac0263652c277.png",
+    "icon": "moi_truong/082_luan_phien.png"
+  },
+  {
+    "order": 83,
+    "name": "Peppy 3 Sao",
+    "desc": "Nhận được một Peppy mang 3 Huy Hiệu ngẫu nhiên.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ce242272cdfe5a0185a8ca04fdced9ff.png",
+    "icon": "moi_truong/083_peppy_3_sao.png"
+  },
+  {
+    "order": 84,
+    "name": "Peppy Bất Cẩn",
+    "desc": "Nhận được một Peppy mang 3 Huy Hiệu ngẫu nhiên, Peppy bất cẩn đôi khi sẽ làm rơi Huy Hiệu vào trong ô vật phẩm của bạn.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/cc1c7ceb737501c6e6fb3d35178847f5.png",
+    "icon": "moi_truong/084_peppy_bat_can.png"
+  },
+  {
+    "order": 85,
+    "name": "Biên Giới Chiến Tranh",
+    "desc": "Tất cả các Điểm Mốc Chiến Đấu ở Vị Diện 3 đều được thay bằng Điểm Mốc Gặp Gỡ.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/c825172b7a1791702b379f4230ad0537.png",
+    "icon": "moi_truong/085_bien_gioi_chien_tranh.png"
+  },
+  {
+    "order": 86,
+    "name": "Hợp Đồng Cho Thuê Lao Động",
+    "desc": "Nhận Huy Hiệu ngẫu nhiên, mỗi lần vào Điểm Mốc Thủ Lĩnh sẽ nhận được nhân vật ngẫu nhiên có Liên Kết tương ứng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/be3c849e8e45711139d2273828f0b6ac.png",
+    "icon": "moi_truong/086_hop_dong_cho_thue_lao_dong.png"
+  },
+  {
+    "order": 87,
+    "name": "Kinh Tế Quá Nhiệt Nghiêm Trọng",
+    "desc": "Tất cả điểm mốc phần thưởng của trận này sẽ được thay thế bằng chủ đề Heo Đất Không Gian Siêu Cấp! Heo Đất Không Gian Siêu Cấp sẽ rơi rất nhiều chiến lợi phẩm!! Nhưng chúng chạy siêu nhanh!!!",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/c53db4b704c4b3563f28db9d8c07d7b0.png",
+    "icon": "moi_truong/087_kinh_te_qua_nhiet_nghiem_trong.png"
+  },
+  {
+    "order": 88,
+    "name": "Lợi Ích Lâu Dài",
+    "desc": "Sau khi tiêu Xu Vàng 30 lần để làm mới, sẽ nhận 20 Xu Vàng, sau đó trong trận này, chỉ cần 1 Xu Vàng là có thể làm mới.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/bf8bd5e35fe942cc5eeb77136ce89270.png",
+    "icon": "moi_truong/088_loi_ich_lau_dai.png"
+  },
+  {
+    "order": 89,
+    "name": "Nhân Tài Trượt Dốc",
+    "desc": "Cửa Hàng có xác suất xuất hiện nhân vật 2 sao.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/2bee5d6b66a11891037c839702b056f9.png",
+    "icon": "moi_truong/089_nhan_tai_truot_doc.png"
+  },
+  {
+    "order": 90,
+    "name": "Quyết Sách Liên Tịch",
+    "desc": "Thực hiện thêm 1 lần chọn 1 trong 3 Chiến Lược Đầu Tư ở điểm mốc 2-6.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ef1e9b9d6ffda787c2b5515612802ebe.png",
+    "icon": "moi_truong/090_quyet_sach_lien_tich.png"
+  },
+  {
+    "order": 91,
+    "name": "Giải Độc Đắc",
+    "desc": "Chiến Lược Đầu Tư thứ nhất là phẩm chất Sắc Màu.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/59f5ff27d57ad0a19066bbd45189e84b.png",
+    "icon": "moi_truong/091_giai_doc_dac.png"
+  },
+  {
+    "order": 92,
+    "name": "Cơ Hội Cuối Cùng",
+    "desc": "Chiến Lược Đầu Tư thứ ba là phẩm chất Sắc Màu.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/c974616fdc5da4f1f61a925e281cc9f8.png",
+    "icon": "moi_truong/092_co_hoi_cuoi_cung.png"
+  },
+  {
+    "order": 93,
+    "name": "Quý Tộc Ngọc Đỏ",
+    "desc": "Khi bắt đầu trận sẽ sở hữu \"Ngọc Đỏ\" và một \"Rương Vũ Trang Cơ Bản\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/0c452451188f1975ff29def96042b05b.png",
+    "icon": "moi_truong/093_quy_toc_ngoc_do.png"
+  },
+  {
+    "order": 94,
+    "name": "Quý Tộc Ngọc Lam",
+    "desc": "Khi bắt đầu trận sẽ sở hữu \"Ngọc Lam\" và một \"Rương Vũ Trang Cơ Bản\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/b253d0b4c108bb677dee62a068bd5094.png",
+    "icon": "moi_truong/094_quy_toc_ngoc_lam.png"
+  },
+  {
+    "order": 95,
+    "name": "Anh Hùng Ra Mắt",
+    "desc": "Nhận được 1 nhân vật 5 COST 2 sao, cần 19 điểm mốc mới có thể đưa vào trận. Sau khi toàn thắng trong trận đấu, điểm mốc ra trận sẽ tiến thêm 1.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/1a7c1d47df8ab970da2daed1d6fa76d1.png",
+    "icon": "moi_truong/095_anh_hung_ra_mat.png"
+  },
+  {
+    "order": 96,
+    "name": "Món Quà Vận Mệnh",
+    "desc": "Lập tức nhận một \"Hộp Bất Ngờ\", hộp quà sẽ mở sau khi đếm ngược 12 điểm mốc, khi toàn thắng trong trận đấu, giảm thêm 1 điểm đếm ngược.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/7c7741b0d42c189db54cdefca737a271.png",
+    "icon": "moi_truong/096_mon_qua_van_menh.png"
+  },
+  {
+    "order": 97,
+    "name": "Bạc - Vàng - Màu",
+    "desc": "Trong ván này, khi chọn Chiến Lược Đầu Tư tại điểm mốc cố định, các lựa chọn trái, giữa, phải sẽ có phẩm chất Bạc, Vàng, Màu, và số lần làm mới Chiến Lược Đầu Tư +2.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/eaee6e94bd701d302191fc9f8c26421c.png",
+    "icon": "moi_truong/097_bac_vang_mau.png"
+  },
+  {
+    "order": 98,
+    "name": "Lực Chiến Tăng",
+    "desc": "Nhận 1 nhân vật gây sát thương 1 COST 2 sao, khi vào điểm mốc mới, nhân vật này sẽ nhận được tăng thuộc tính ngẫu nhiên vĩnh viễn.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/51d7e77376e1cde83db388d9ff0878c4.png",
+    "icon": "moi_truong/098_luc_chien_tang.png"
+  },
+  {
+    "order": 99,
+    "name": "Lực Chiến Tăng Vọt",
+    "desc": "Nhận được 1 nhân vật 2 COST 2 sao ngẫu nhiên, khi vào điểm mốc mới, nhân vật này sẽ nhận được tăng thuộc tính ngẫu nhiên vĩnh viễn.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/edb520cd7fe680a8108f525c5af68dc5.png",
+    "icon": "moi_truong/099_luc_chien_tang_vot.png"
+  },
+  {
+    "order": 100,
+    "name": "Kinh Nghiệm Thành Công",
+    "desc": "Sau khi đạt cấp 8, khi vào 3 điểm mốc tiếp theo, nhận 12 EXP.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/f57c100d5ad0f7844cdd4f2cd7be8e9b.png",
+    "icon": "moi_truong/100_kinh_nghiem_thanh_cong.png"
+  },
+  {
+    "order": 101,
+    "name": "Dự Trữ Nhân Tài",
+    "desc": "Tiếp tế đầu trận thay bằng 3 nhân vật 3 COST ngẫu nhiên. Khi nhân vật 3 COST tăng đến 2/3 sao, nhận 11%/33% Buff Tốc Độ, 22%/66% Buff Sát Thương.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/8dfa453f3af2cd5203765a0deb2dac7a.png",
+    "icon": "moi_truong/101_du_tru_nhan_tai.png"
+  },
+  {
+    "order": 102,
+    "name": "Thuật Toán Tiến Hóa",
+    "desc": "Khi vào điểm mốc mới, tất cả nhân vật trong trận nhận 4% Sức Mạnh Trên Sân-Dự Bị và 2% Giảm Sát Thương, hiệu ứng này có thể cộng dồn.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/e44f8740840787208ad5e93823121597.png",
+    "icon": "moi_truong/102_thuat_toan_tien_hoa.png"
+  },
+  {
+    "order": 103,
+    "name": "Phá Hoại Hậu Phương Địch",
+    "desc": "Khi bắt đầu trận, khiến một Phụ Tố của kẻ địch đã tạo mất hiệu lực.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/b916ec58774a972494b80c166d2897f1.png",
+    "icon": "moi_truong/103_pha_hoai_hau_phuong_dich.png"
+  },
+  {
+    "order": 104,
+    "name": "Bậc Thầy Chiến Lược",
+    "desc": "Khi nhận Chiến Lược Đầu Tư, nhận Xu Vàng bằng (2 × số Chiến Lược Đầu Tư đã sở hữu). Tại điểm mốc 3-5 nhận thêm 1 Chiến Lược Đầu Tư.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/5b6063650b7d02a7ba66732fbb9583c2.png",
+    "icon": "moi_truong/104_bac_thay_chien_luoc.png"
+  },
+  {
+    "order": 105,
+    "name": "Xuất Hiện Sớm",
+    "desc": "Phần chọn Hào Quang Nhân Vật Chính được đẩy sớm lên điểm mốc 1-6 và 2-4.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/2a685773811d647b4e79bc817fa1d437.png",
+    "icon": "moi_truong/105_xuat_hien_som.png"
+  },
+  {
+    "order": 106,
+    "name": "Làm Mới Nào",
+    "desc": "Khi bắt đầu Vị Diện 1/2/3, lần lượt nhận 2/3/4 lần làm mới Cửa Hàng miễn phí.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/83a9f9bbf95b7c0f62c512660a3c0855.png",
+    "icon": "moi_truong/106_lam_moi_nao.png"
+  },
+  {
+    "order": 107,
+    "name": "Mua Sắm Hào Quang",
+    "desc": "Giá làm mới Hào Quang Nhân Vật Chính ván này cố định là 1 Xu Vàng, đồng thời nhận 6 lần làm mới Hào Quang Nhân Vật Chính miễn phí.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/35aa4a043715e99398c7119f60983bc7.png",
+    "icon": "moi_truong/107_mua_sam_hao_quang.png"
+  },
+  {
+    "order": 108,
+    "name": "Thanh Mai Ngưu Mã",
+    "desc": "Nhận 2 \"Máy Chiếu Thực Tập Sinh\". Khi lần đầu sở hữu cùng lúc 2 nhân vật 1 COST 3 sao, nhận 1 \"Máy Chiếu Hoàn Hảo\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/23550b7d03bc71b0ae28e40e504857ec.png",
+    "icon": "moi_truong/108_thanh_mai_nguu_ma.png"
+  },
+  {
+    "order": 109,
+    "name": "Cổ Phiếu Khái Niệm Đánh Lan",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đánh Lan\", xác suất làm mới của nhân vật \"Đánh Lan\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/892af564938a9ef7a829bf69953367f4.png",
+    "icon": "moi_truong/109_co_phieu_khai_niem_danh_lan.png"
+  },
+  {
+    "order": 110,
+    "name": "Lời Mời Hạm Đội Xianzhou",
+    "desc": "Nhận 1 \"Huy Hiệu Hạm Đội Xianzhou\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ae436a589b0754a3d7181084f4610c70.png",
+    "icon": "moi_truong/110_loi_moi_ham_doi_xianzhou.png"
+  },
+  {
+    "order": 111,
+    "name": "Lời Mời Khu Vườn Kỳ Thú",
+    "desc": "Nhận 1 \"Huy Hiệu Khu Vườn Kỳ Thú\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/7380fb9d6212c8bbf14c0312f861ae62.png",
+    "icon": "moi_truong/111_loi_moi_khu_vuon_ky_thu.png"
+  },
+  {
+    "order": 112,
+    "name": "Lời Mời Trò Chơi Ảo Nguyệt",
+    "desc": "Nhận 1 \"Huy Hiệu Trò Chơi Ảo Nguyệt\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/4098c0ba236fbb42081325918206532e.png",
+    "icon": "moi_truong/112_loi_moi_tro_choi_ao_nguyet.png"
+  },
+  {
+    "order": 113,
+    "name": "Lời Mời Nhà Du Hành",
+    "desc": "Nhận 1 Huy Hiệu Nhà Du Hành.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/c7dc2ac361d8d4cc500a40c0dc2fb6be.png",
+    "icon": "moi_truong/113_loi_moi_nha_du_hanh.png"
+  },
+  {
+    "order": 114,
+    "name": "Lời Mời Đường Ray Bạc Khai Phá",
+    "desc": "Nhận 1 \"Huy Hiệu Đường Ray Bạc Khai Phá\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/b39a36dd00420374f1414e7dfa9e14e9.png",
+    "icon": "moi_truong/114_loi_moi_duong_ray_bac_khai_pha.png"
+  },
+  {
+    "order": 115,
+    "name": "Lời Mời Thợ Săn Stellaron",
+    "desc": "Nhận 1 \"Huy Hiệu Thợ Săn Stellaron\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/2dbcda2ca61c95e63184edc33816d8e9.png",
+    "icon": "moi_truong/115_loi_moi_tho_san_stellaron.png"
+  },
+  {
+    "order": 116,
+    "name": "Lời Mời Người Khổng Lồ Tí Hon",
+    "desc": "Nhận 1 \"Huy Hiệu Người Khổng Lồ Tí Hon\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/b069aad9d07233392d8b176a2b5f20a2.png",
+    "icon": "moi_truong/116_loi_moi_nguoi_khong_lo_ti_hon.png"
+  },
+  {
+    "order": 117,
+    "name": "Lời Mời Cõi Mộng Đan Xen",
+    "desc": "Nhận 1 \"Huy Hiệu Cõi Mộng Đan Xen\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/82cf8f7d3b2db2cdfdf8efc3404b774b.png",
+    "icon": "moi_truong/117_loi_moi_coi_mong_dan_xen.png"
+  },
+  {
+    "order": 118,
+    "name": "Lời Mời Nhà Hàng Hoàng Kim",
+    "desc": "Nhận 1 \"Huy Hiệu Huy Hiệu Nhà Hàng Hoàng Kim\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/cc52ae477084b28807fb741549d82edb.png",
+    "icon": "moi_truong/118_loi_moi_nha_hang_hoang_kim.png"
+  },
+  {
+    "order": 119,
+    "name": "Lời Mời Đòn Đánh Theo Sau",
+    "desc": "Nhận 1 \"Huy Hiệu Đòn Đánh Theo Sau\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/597b7df90a23b0ce587b62335d66a980.png",
+    "icon": "moi_truong/119_loi_moi_don_danh_theo_sau.png"
+  },
+  {
+    "order": 120,
+    "name": "Lời Mời Sát Thương Duy Trì",
+    "desc": "Nhận 1 \"Huy Hiệu Sát Thương Duy Trì\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/d05b56ed8669a52672a93a955e5d80a2.png",
+    "icon": "moi_truong/120_loi_moi_sat_thuong_duy_tri.png"
+  },
+  {
+    "order": 121,
+    "name": "Lời Mời Đánh Lan",
+    "desc": "Nhận 1 \"Huy Hiệu Đánh Lan\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/ed491a1ccbdb57af53965e49d43040a7.png",
+    "icon": "moi_truong/121_loi_moi_danh_lan.png"
+  },
+  {
+    "order": 122,
+    "name": "Lời Mời Liên Kích",
+    "desc": "Nhận 1 \"Huy Hiệu Liên Kích\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/6cb0f276545d70ec04f0b7eab6ca8154.png",
+    "icon": "moi_truong/122_loi_moi_lien_kich.png"
+  },
+  {
+    "order": 123,
+    "name": "Lời Mời Phá Vỡ",
+    "desc": "Nhận 1 \"Huy Hiệu Phá Vỡ\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/98dfa76590002a426c00c738ddbf9977.png",
+    "icon": "moi_truong/123_loi_moi_pha_vo.png"
+  },
+  {
+    "order": 124,
+    "name": "Lời Mời Triệu Hồi",
+    "desc": "Nhận 1 \"Huy Hiệu Triệu Hồi\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/6b5da1f0d5db69ba665a19c2224e28be.png",
+    "icon": "moi_truong/124_loi_moi_trieu_hoi.png"
+  },
+  {
+    "order": 125,
+    "name": "Lời Mời Vui Vẻ",
+    "desc": "Nhận 1 \"Huy Hiệu Vui Vẻ\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/c8b96a8d904d3ffe683fb58bffccf2cf.png",
+    "icon": "moi_truong/125_loi_moi_vui_ve.png"
+  },
+  {
+    "order": 126,
+    "name": "Lời Mời Phản Kích",
+    "desc": "Nhận 1 \"Huy Hiệu Phản Kích\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/db9035020a65b2f685f82fc648e0bdba.png",
+    "icon": "moi_truong/126_loi_moi_phan_kich.png"
+  },
+  {
+    "order": 127,
+    "name": "Lời Mời Năng Lượng",
+    "desc": "Nhận 1 \"Huy Hiệu Năng Lượng\".",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/9b6efa61de45812ab928c4a77cf3d9ae.png",
+    "icon": "moi_truong/127_loi_moi_nang_luong.png"
+  },
+  {
+    "order": 128,
+    "name": "Cổ Phiếu Khái Niệm Hạm Đội Xianzhou",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Hạm Đội Xianzhou\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Hạm Đội Xianzhou\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/2cf552f8b0b998155b314018dc0d05c9.png",
+    "icon": "moi_truong/128_co_phieu_khai_niem_ham_doi_xianzhou.png"
+  },
+  {
+    "order": 129,
+    "name": "Cổ Phiếu Khái Niệm Khu Vườn Kỳ Thú",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Khu Vườn Kỳ Thú\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Khu Vườn Kỳ Thú\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/b58b98c535b65dbaa32bf2ee0c665e97.png",
+    "icon": "moi_truong/129_co_phieu_khai_niem_khu_vuon_ky_thu.png"
+  },
+  {
+    "order": 130,
+    "name": "Cổ Phiếu Khái Niệm Trò Chơi Ảo Nguyệt",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Trò Chơi Ảo Nguyệt\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Trò Chơi Ảo Nguyệt\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/59aa5b45b27489d54985e8427c87d748.png",
+    "icon": "moi_truong/130_co_phieu_khai_niem_tro_choi_ao_nguyet.png"
+  },
+  {
+    "order": 131,
+    "name": "Cổ Phiếu Khái Niệm Đường Ray Bạc Khai Phá",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đường Ray Bạc Khai Phá\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Đường Ray Bạc Khai Phá\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/e6c3ad139f4f565f3bc9a4159f258536.png",
+    "icon": "moi_truong/131_co_phieu_khai_niem_duong_ray_bac_khai_pha.png"
+  },
+  {
+    "order": 132,
+    "name": "Cổ Phiếu Khái Niệm Thương Hội Astropolis",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Thương Hội Astropolis\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Thương Hội Astropolis\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/d7720381a2a45c33f1f7b5d0549c74c9.png",
+    "icon": "moi_truong/132_co_phieu_khai_niem_thuong_hoi_astropolis.png"
+  },
+  {
+    "order": 133,
+    "name": "Cổ Phiếu Khái Niệm Đòn Đánh Theo Sau",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đòn Đánh Theo Sau\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Đòn Đánh Theo Sau\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/682814b4dfef4fdc67c90d4b381bdb40.png",
+    "icon": "moi_truong/133_co_phieu_khai_niem_don_danh_theo_sau.png"
+  },
+  {
+    "order": 134,
+    "name": "Cổ Phiếu Khái Niệm Sát Thương Duy Trì",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Sát Thương Duy Trì\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Sát Thương Duy Trì\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/5ad3e47f07dd3ef0a886ed09f39d449b.png",
+    "icon": "moi_truong/134_co_phieu_khai_niem_sat_thuong_duy_tri.png"
+  },
+  {
+    "order": 135,
+    "name": "Cổ Phiếu Khái Niệm Đánh Lan",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Đánh Lan\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Đánh Lan\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/2d8cbee2657178eebd7fad9e2d99dd3a.png",
+    "icon": "moi_truong/135_co_phieu_khai_niem_danh_lan.png"
+  },
+  {
+    "order": 136,
+    "name": "Cổ Phiếu Khái Niệm Liên Kích",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Liên Kích\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Liên Kích\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/0624afd90eaca474f4de9c2d6c5f14d1.png",
+    "icon": "moi_truong/136_co_phieu_khai_niem_lien_kich.png"
+  },
+  {
+    "order": 137,
+    "name": "Cổ Phiếu Khái Niệm Phá Vỡ",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Phá Vỡ\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Phá Vỡ\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/f196c770ea7c39a43eb2ac4b519b2a66.png",
+    "icon": "moi_truong/137_co_phieu_khai_niem_pha_vo.png"
+  },
+  {
+    "order": 138,
+    "name": "Cổ Phiếu Khái Niệm Triệu Hồi",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Triệu Hồi\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Triệu Hồi\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/8af1c8b36b99da21eb5e8365e00006b2.png",
+    "icon": "moi_truong/138_co_phieu_khai_niem_trieu_hoi.png"
+  },
+  {
+    "order": 139,
+    "name": "Cổ Phiếu Khái Niệm Vui Vẻ",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Vui Vẻ\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Vui Vẻ\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/d18ae734504db45f84c4aa20e1c51722.png",
+    "icon": "moi_truong/139_co_phieu_khai_niem_vui_ve.png"
+  },
+  {
+    "order": 140,
+    "name": "Cổ Phiếu Khái Niệm Phản Kích",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Phản Kích\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Phản Kích\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/8f37314f072d3e69b29174130be40ca2.png",
+    "icon": "moi_truong/140_co_phieu_khai_niem_phan_kich.png"
+  },
+  {
+    "order": 141,
+    "name": "Cổ Phiếu Khái Niệm Năng Lượng",
+    "desc": "Khi bắt đầu trận sẽ nhận được nhân vật \"Năng Lượng\" và Trang Bị Cơ Bản ban đầu, xác suất làm mới của nhân vật \"Năng Lượng\" tăng.",
+    "iconUrl": "https://act-webstatic.hoyoverse.com/darkmatter/hkrpg/prod_gf_cn/item_icon_ubd4re/802a5ac13d41685e100ec5f0239d39dc.png",
+    "icon": "moi_truong/141_co_phieu_khai_niem_nang_luong.png"
+  }
+]
